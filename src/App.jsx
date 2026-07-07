@@ -532,7 +532,7 @@ function NavBar({ scrolled }) {
         @media (max-width: 600px) {
           .nav-logo-text { font-size: 15px; }
           .nav-logo-mark { width: 34px; height: 34px; }
-          .nav-logo-mark-hover { width: 100px; height: 60px; }
+          .nav-logo-mark-hover { width: 100px; height: 70px; }
           .nav { padding: 14px 16px !important; }
           .nav.scrolled { padding: 10px 16px !important; }
         }
