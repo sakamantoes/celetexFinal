@@ -9,6 +9,7 @@ import cyberMall from '../assets/cyberMall.jpg'
 import video from '../assets/video.mp4'
 import mockup from '../assets/mockup.jpg'
 import newLog from '../assets/newLog.jpg'
+import main from '../assets/main.jpg'
 
 const images = {
    Logo: logo,
@@ -21,7 +22,8 @@ const images = {
    video,
    mockup,
    logo01Png: logo01,
-   newLog
+   newLog,
+   main
 }
 
 export default images

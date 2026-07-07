@@ -20,6 +20,7 @@ import {
   Clock,
   Star,
 } from "lucide-react";
+import images from "./assets/image";
 
 /* ----------------------------------------------------------------------
    IMAGES — sourced stock photography (business / city / office themed
@@ -158,7 +159,9 @@ function Reveal({ as: Tag = "div", className = "", delay = 0, children, ...rest 
   return (
     <Tag
       ref={ref}
-      className={`reveal ${visible ? "reveal-visible" : ""} ${className}`}
+      className={`transition-all duration-700 ease-[cubic-bezier(.2,.7,.2,1)] ${
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+      } ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
       {...rest}
     >
@@ -169,8 +172,8 @@ function Reveal({ as: Tag = "div", className = "", delay = 0, children, ...rest 
 
 function Eyebrow({ children }) {
   return (
-    <div className="eyebrow">
-      <span className="eyebrow-chip" />
+    <div className="inline-flex items-center gap-2.5 font-mono text-xs tracking-[0.12em] uppercase text-[#C9A227] mb-5">
+      <span className="w-2 h-2 bg-[#C9A227] rounded-sm inline-block" />
       {children}
     </div>
   );
@@ -182,7 +185,9 @@ function StatNumber({ value, suffix = "", decimals = 0, delay = 0 }) {
   return (
     <span
       ref={ref}
-      className={`stat-number reveal-scale ${visible ? "reveal-scale-visible" : ""}`}
+      className={`font-display font-bold text-5xl inline-block transition-all duration-700 ease-[cubic-bezier(.22,.61,.36,1)] ${
+        visible ? "opacity-100 scale-100" : "opacity-0 scale-90"
+      }`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {count.toFixed(decimals)}
@@ -222,69 +227,77 @@ function NavBar({ scrolled }) {
 
   return (
     <>
-      <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
-        <div className="nav-container">
-          <a href="#home" className="nav-logo">
-            <span className="nav-logo-mark">
-              <Building2 size={20} strokeWidth={2.4} />
-            </span>
-            <span className="nav-logo-text">
-              Vantara <span>Group</span>
-            </span>
-          </a>
+      <nav className={`sticky top-0 z-50 flex items-center justify-between px-6 md:px-12 py-5 md:py-6 transition-all duration-300 ${
+        scrolled ? "bg-[#0a0a0a]/98 border-b border-white/5 py-3 md:py-4" : "bg-transparent"
+      }`}>
+        <div className="max-w-[1360px] w-full mx-auto flex items-center justify-between">
+       <a href="#home" className="flex items-center gap-4 flex-shrink-0 no-underline group">
+  <span className="w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center text-[#0a0a0a] shadow-[0_0_40px_rgba(201,162,39,0.2)] transition-all duration-300 group-hover:scale-110 group-hover:-rotate-6 flex-shrink-0">
+    <img src={images.main} alt="Celetex Group Logo" className="w-full h-full object-contain rounded-2xl" />
+  </span>
+  <span className="font-display font-extrabold text-3xl md:text-4xl tracking-wide text-white">
+    Celetex <span className="text-[#C9A227]">Group</span>
+  </span>
+</a>
 
-          <div className="nav-links-desktop">
+          <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a key={link.label} href={link.href} className="nav-link">
+              <a key={link.label} href={link.href} className="text-white/65 text-sm font-medium relative py-1 no-underline transition-colors duration-300 hover:text-white after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-[#C9A227] after:transition-all after:duration-300 hover:after:w-full">
                 {link.label}
               </a>
             ))}
           </div>
 
-          <div className="nav-cta">
-            <a href="#contact" className="btn btn-gold nav-cta-btn">
+          <div className="flex items-center gap-4">
+            <a href="#contact" className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-[#0a0a0a] bg-gradient-to-r from-[#F3D27A] to-[#C9A227] border border-transparent transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(201,162,39,0.35)] active:scale-95 no-underline">
               Get in Touch <ArrowRight size={16} />
             </a>
-            <button className="menu-toggle" onClick={() => setMenuOpen(true)} aria-label="Open menu">
+            <button className="md:hidden text-white p-1 transition-transform duration-200 active:scale-90" onClick={() => setMenuOpen(true)} aria-label="Open menu">
               <Menu size={24} />
             </button>
           </div>
         </div>
       </nav>
 
-      <div className={`mobile-menu-overlay ${menuOpen ? "open" : ""}`}>
-        <div className="mobile-menu-header">
-          <div className="nav-logo">
-            <span className="nav-logo-mark">
+      <div className={`fixed inset-0 bg-[#0a0a0a] z-[100] flex flex-col overflow-y-auto transition-opacity duration-350 ${
+        menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+      }`}>
+        <div className="flex items-center justify-between px-6 py-5 border-b border-white/5 flex-shrink-0">
+          <div className="flex items-center gap-3">
+            <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#F3D27A] to-[#C9A227] flex items-center justify-center text-[#0a0a0a] border-2 border-[#C9A227]/30 shadow-[0_0_30px_rgba(201,162,39,0.15)] flex-shrink-0">
               <Building2 size={20} strokeWidth={2.4} />
             </span>
-            <span className="nav-logo-text">
-              Vantara <span>Group</span>
+            <span className="font-display font-extrabold text-xl tracking-wide text-white">
+              Celetex <span className="text-[#C9A227]">Group</span>
             </span>
           </div>
-          <button className="mobile-menu-close" onClick={() => setMenuOpen(false)} aria-label="Close menu">
+          <button className="text-white p-2 rounded-lg transition-all duration-300 hover:bg-white/5 hover:rotate-90" onClick={() => setMenuOpen(false)} aria-label="Close menu">
             <X size={28} />
           </button>
         </div>
 
-        <div className="mobile-menu-body">
-          <div className="mobile-menu-links">
+        <div className="flex-1 flex flex-col justify-between px-6 py-10 md:py-12">
+          <div className="space-y-2">
             {navLinks.map((link, index) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="mobile-menu-link"
+                className={`flex items-center gap-4 px-5 py-4 rounded-xl text-white no-underline font-display text-xl font-medium tracking-tight border border-transparent transition-all duration-300 hover:bg-white/5 hover:border-[#C9A227]/20 ${
+                  menuOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
+                }`}
                 style={{ transitionDelay: menuOpen ? `${80 + index * 60}ms` : "0ms" }}
                 onClick={() => setMenuOpen(false)}
               >
-                <span className="mobile-menu-link-number">0{index + 1}</span>
-                <span className="mobile-menu-link-label">{link.label}</span>
-                <ArrowUpRight size={20} className="mobile-menu-link-arrow" />
+                <span className="font-mono text-xs text-[#C9A227]/60 min-w-[28px]">0{index + 1}</span>
+                <span className="flex-1">{link.label}</span>
+                <ArrowUpRight size={20} className="text-[#C9A227] opacity-0 -translate-x-2.5 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
               </a>
             ))}
             <a
               href="#contact"
-              className="mobile-menu-cta"
+              className={`flex items-center justify-between px-6 py-4 mt-2 rounded-xl bg-gradient-to-r from-[#F3D27A] to-[#C9A227] text-[#0a0a0a] no-underline font-display text-lg font-semibold transition-all duration-300 hover:shadow-[0_8px_24px_rgba(201,162,39,0.25)] ${
+                menuOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
+              }`}
               style={{ transitionDelay: menuOpen ? `${80 + navLinks.length * 60}ms` : "0ms" }}
               onClick={() => setMenuOpen(false)}
             >
@@ -293,79 +306,12 @@ function NavBar({ scrolled }) {
             </a>
           </div>
 
-          <div className="mobile-menu-footer">
-            <div className="mobile-menu-contact">
-              <a href="mailto:hello@vantaragroup.com"><Mail size={18} /> hello@vantaragroup.com</a>
-              <a href="tel:+2348140784286"><Phone size={18} /> +234 814 078 4286</a>
-            </div>
+          <div className="border-t border-white/5 pt-6 mt-8 space-y-2">
+            <a href="mailto:hello@celetexgroup.com" className="flex items-center gap-3 text-white/70 no-underline text-sm transition-colors duration-300 hover:text-[#F3D27A] py-2"><Mail size={18} /> hello@celetexgroup.com</a>
+            <a href="tel:+2348140784286" className="flex items-center gap-3 text-white/70 no-underline text-sm transition-colors duration-300 hover:text-[#F3D27A] py-2"><Phone size={18} /> +234 814 078 4286</a>
           </div>
         </div>
       </div>
-
-      <style>{`
-        .nav-container{ max-width:1360px; width:100%; margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
-        .nav-links-desktop{ display:flex; align-items:center; gap:32px; }
-        .nav-link{ color:rgba(255,255,255,0.65); font-size:14px; font-weight:500; position:relative; padding:4px 0; transition:color .25s ease; text-decoration:none; }
-        .nav-link::after{ content:''; position:absolute; left:0; bottom:-2px; width:0; height:2px; background:var(--gold); transition:width .3s ease; }
-        .nav-link:hover{ color:var(--white); }
-        .nav-link:hover::after{ width:100%; }
-
-        .mobile-menu-overlay{ position:fixed; inset:0; background:var(--black); z-index:100; display:flex; flex-direction:column; overflow-y:auto; opacity:0; pointer-events:none; transition:opacity .35s ease; }
-        .mobile-menu-overlay.open{ opacity:1; pointer-events:auto; }
-        .mobile-menu-header{ display:flex; align-items:center; justify-content:space-between; padding:20px 24px; border-bottom:1px solid rgba(255,255,255,0.06); flex-shrink:0; }
-        .mobile-menu-close{ background:none; border:none; color:#fff; cursor:pointer; padding:8px; display:flex; align-items:center; justify-content:center; border-radius:8px; transition:background .3s ease, transform .2s ease; }
-        .mobile-menu-close:hover{ background:rgba(255,255,255,0.06); transform:rotate(90deg); }
-        .mobile-menu-body{ flex:1; display:flex; flex-direction:column; justify-content:space-between; padding:40px 24px 32px; }
-        .mobile-menu-link{ display:flex; align-items:center; gap:16px; padding:16px 20px; border-radius:12px; color:#fff; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:500; letter-spacing:-0.02em; border:1px solid transparent; opacity:0; transform:translateX(-16px); transition:background .3s ease, opacity .4s ease, transform .4s ease; }
-        .mobile-menu-overlay.open .mobile-menu-link{ opacity:1; transform:translateX(0); }
-        .mobile-menu-link:hover{ background:rgba(255,255,255,0.04); border-color:rgba(201,162,39,0.2); }
-        .mobile-menu-link-number{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--gold); opacity:.6; min-width:28px; }
-        .mobile-menu-link-label{ flex:1; }
-        .mobile-menu-link-arrow{ opacity:0; transform:translateX(-10px); transition:all .3s ease; color:var(--gold); }
-        .mobile-menu-link:hover .mobile-menu-link-arrow{ opacity:1; transform:translateX(0); }
-        .mobile-menu-cta{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; margin-top:8px; border-radius:12px; background:linear-gradient(135deg,var(--gold-bright),var(--gold)); color:#0a0a0a; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; opacity:0; transform:translateX(-16px); transition:box-shadow .3s ease, opacity .4s ease, transform .4s ease; }
-        .mobile-menu-overlay.open .mobile-menu-cta{ opacity:1; transform:translateX(0); }
-        .mobile-menu-cta:hover{ box-shadow:0 8px 24px rgba(201,162,39,0.25); }
-        .mobile-menu-footer{ border-top:1px solid rgba(255,255,255,0.06); padding-top:24px; margin-top:32px; }
-        .mobile-menu-contact a{ display:flex; align-items:center; gap:12px; color:rgba(255,255,255,0.7); text-decoration:none; font-size:14px; transition:color .3s ease; padding:8px 0; }
-        .mobile-menu-contact a:hover{ color:var(--gold-bright); }
-
-        @media (max-width:980px){
-          .nav-cta-btn{ display:none !important; }
-          .menu-toggle{ display:flex !important; align-items:center; justify-content:center; }
-          .nav{ padding:16px 24px !important; }
-          .nav.scrolled{ padding:12px 24px !important; }
-          .nav-links-desktop{ display:none; }
-        }
-        @media (min-width:981px){
-          .nav-cta-btn{ display:inline-flex !important; }
-          .menu-toggle{ display:none !important; }
-        }
-
-        .nav{ position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:20px 48px; background:rgba(10,10,10,0); transition:background-color .4s ease, padding .4s ease, border-color .4s ease; border-bottom:1px solid transparent; }
-        .nav.scrolled{ background:rgba(8,8,8,0.98); border-bottom:1px solid rgba(255,255,255,0.06); padding:14px 48px; }
-        .nav-logo{ display:flex; align-items:center; gap:10px; flex-shrink:0; text-decoration:none; }
-        .nav-logo-mark{ width:38px; height:38px; border-radius:10px; background:linear-gradient(135deg,var(--gold-bright),var(--gold-deep)); display:flex; align-items:center; justify-content:center; color:#0a0a0a; border:2px solid rgba(201,162,39,0.3); box-shadow:0 0 20px rgba(201,162,39,0.15); transition:transform .3s ease; flex-shrink:0; }
-        .nav-logo-mark:hover{ transform:scale(1.1) rotate(-5deg); }
-        .nav-logo-text{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; letter-spacing:0.02em; white-space:nowrap; color:var(--white); }
-        .nav-logo-text span{ color:var(--gold); }
-
-        .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:999px; font-size:13.5px; font-weight:600; border:1px solid transparent; transition:all .3s cubic-bezier(.2,.8,.2,1); white-space:nowrap; text-decoration:none; }
-        .btn:active{ transform:scale(0.97); }
-        .btn-gold{ background:linear-gradient(135deg,var(--gold-bright),var(--gold)); color:#0a0a0a; }
-        .btn-gold:hover{ transform:translateY(-2px); box-shadow:0 10px 30px rgba(201,162,39,0.35); }
-        .btn-ghost-dark{ background:transparent; border:1px solid rgba(255,255,255,0.15); color:var(--white); }
-        .btn-ghost-dark:hover{ border-color:var(--gold); color:var(--gold-bright); }
-        .menu-toggle{ background:none; border:none; color:var(--white); cursor:pointer; padding:4px; display:flex; align-items:center; justify-content:center; transition:transform .15s ease; }
-        .menu-toggle:active{ transform:scale(0.9); }
-
-        @media (max-width:600px){
-          .nav-logo-text{ font-size:15px; }
-          .nav-logo-mark{ width:34px; height:34px; }
-          .nav{ padding:14px 16px !important; }
-          .nav.scrolled{ padding:10px 16px !important; }
-        }
-      `}</style>
     </>
   );
 }
@@ -379,39 +325,84 @@ function HeroSection() {
   const tiltImg = useTilt(4, true);
 
   return (
-    <section className="hero" id="home" ref={ref}>
-      <div className="hero-inner">
-        <div className={`reveal ${visible ? "reveal-visible" : ""}`}>
-          <Eyebrow>Trusted Multi-Sector Enterprise</Eyebrow>
-          <h1>
-            Focused on delivering thoughtful strategy and
+    <section className="px-6 md:px-12 py-16 md:py-24 lg:py-28 relative" id="home" ref={ref}>
+      <div className="max-w-[1360px] mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className={`transition-all duration-800 ease-[cubic-bezier(.2,.7,.2,1)] ${
+          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+        }`}>
+          <Eyebrow>DIVERSE VENTURE, UNIFIED VISION</Eyebrow>
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] mb-5">
+          Celetex Group of Company Limited
             <br />
-            <span className="accent">flawless execution.</span>
+            <span className="bg-gradient-to-r from-[#F3D27A] to-[#C9A227] bg-clip-text text-transparent">  Building a legacy of innovation across Africa.</span>
           </h1>
-          <p className="lead">
-            We take pride in transforming ambition into results through a meticulous approach across
-            every venture we run. Each project is guided by careful planning, skilled specialists, and
-            a deep understanding of the sectors we serve.
+          <p className="text-base md:text-lg leading-relaxed text-white/60 max-w-xl mb-9">
+          Celetex Group is a diversified business conglomerate delivering innovation solutions across media, real esate, travel, and digital commerce - empowering individual, business, and communities.
           </p>
-          <div className="hero-ctas">
-            <a href="#contact" className="btn btn-gold">Request a Consultation <ArrowRight size={16} /></a>
-            <a href="#services" className="btn btn-ghost-dark">Our Services</a>
+          <div className="flex flex-wrap gap-3.5">
+            <a href="#contact" className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-[#0a0a0a] bg-gradient-to-r from-[#F3D27A] to-[#C9A227] border border-transparent transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(201,162,39,0.35)] active:scale-95 no-underline">Request a Consultation <ArrowRight size={16} /></a>
+            <a href="#services" className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-white bg-transparent border border-white/15 transition-all duration-300 hover:border-[#C9A227] hover:text-[#F3D27A] no-underline">Our Services</a>
+          </div>
+
+          {/* User Circle Indicators */}
+          <div className="flex items-center gap-3 mt-8">
+            <div className="flex -space-x-2">
+              <div className="w-10 h-10 rounded-full border-2 border-[#0a0a0a] bg-gradient-to-br from-[#F3D27A] to-[#C9A227] flex items-center justify-center text-xs font-bold text-[#0a0a0a] shadow-lg">
+                JD
+              </div>
+              <div className="w-10 h-10 rounded-full border-2 border-[#0a0a0a] bg-gradient-to-br from-[#4a4a4a] to-[#2a2a2a] flex items-center justify-center text-xs font-bold text-white/80 shadow-lg">
+                AK
+              </div>
+              <div className="w-10 h-10 rounded-full border-2 border-[#0a0a0a] bg-gradient-to-br from-[#4a4a4a] to-[#2a2a2a] flex items-center justify-center text-xs font-bold text-white/80 shadow-lg">
+                MR
+              </div>
+              <div className="w-10 h-10 rounded-full border-2 border-[#0a0a0a] bg-[#C9A227]/20 flex items-center justify-center text-sm font-bold text-[#F3D27A] shadow-lg">
+                +
+              </div>
+            </div>
+            <div className="text-sm text-white/60">
+              <span className="font-semibold text-white">100+</span> trusted partners
+            </div>
           </div>
         </div>
 
-        <div className={`hero-visual ${visible ? "reveal-visible" : ""}`} ref={tiltImg.ref} onMouseMove={tiltImg.onMouseMove} onMouseLeave={tiltImg.onMouseLeave}>
-          <div className="hero-img-main">
-            <img src={img.skyline} alt="City skyline representing our reach" loading="eager" />
-            <div className="hero-img-glow" />
+        <div className={`relative h-[420px] md:h-[480px] lg:h-[520px] transition-all duration-800 ease-[cubic-bezier(.22,.61,.36,1)] delay-150 ${
+          visible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+        }`} ref={tiltImg.ref} onMouseMove={tiltImg.onMouseMove} onMouseLeave={tiltImg.onMouseLeave}>
+          <div className="absolute top-0 right-0 w-[70%] h-[80%] rounded-2xl overflow-hidden shadow-2xl border border-white/5">
+            <img src={img.skyline} alt="City skyline representing our reach" className="w-full h-full object-cover" loading="eager" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/55 via-transparent to-transparent" />
           </div>
-          <div className="hero-img-sub">
-            <img src={img.meeting} alt="Team collaborating on strategy" loading="eager" />
+          <div className="absolute bottom-0 left-0 w-[44%] h-[52%] rounded-2xl overflow-hidden shadow-2xl border border-white/5">
+            <img src={img.meeting} alt="Team collaborating on strategy" className="w-full h-full object-cover" loading="eager" />
           </div>
-          <div className="hero-badge hero-badge-1">
-            <div className="hero-badge-icon"><ShieldCheck size={18} /></div>
+          <div className="absolute top-4 md:top-6 left-0 bg-[#0c0c0c]/95 border border-white/5 rounded-xl p-3.5 md:p-4 flex items-center gap-3 shadow-2xl">
+            <div className="w-9 h-9 rounded-xl bg-[#C9A227]/20 flex items-center justify-center text-[#F3D27A]"><ShieldCheck size={18} /></div>
             <div>
-              <div className="hero-badge-num">3+ Yrs</div>
-              <div className="hero-badge-label">Proven Track Record</div>
+              <div className="font-display font-bold text-base text-white leading-tight">3+ Yrs</div>
+              <div className="text-xs text-white/55">Proven Track Record</div>
+            </div>
+          </div>
+
+          {/* Floating user indicator on the image */}
+          <div className="absolute bottom-4 right-4 bg-[#0c0c0c]/95 border border-white/5 rounded-xl p-3 flex items-center gap-3 shadow-2xl backdrop-blur-sm">
+            <div className="flex -space-x-1.5">
+              <div className="w-8 h-8 rounded-full border-2 border-[#0c0c0c] bg-gradient-to-br from-[#F3D27A] to-[#C9A227] flex items-center justify-center text-[10px] font-bold text-[#0a0a0a]">
+                JD
+              </div>
+              <div className="w-8 h-8 rounded-full border-2 border-[#0c0c0c] bg-gradient-to-br from-[#4a4a4a] to-[#2a2a2a] flex items-center justify-center text-[10px] font-bold text-white/80">
+                AK
+              </div>
+              <div className="w-8 h-8 rounded-full border-2 border-[#0c0c0c] bg-gradient-to-br from-[#4a4a4a] to-[#2a2a2a] flex items-center justify-center text-[10px] font-bold text-white/80">
+                MR
+              </div>
+              <div className="w-8 h-8 rounded-full border-2 border-[#0c0c0c] bg-[#C9A227]/20 flex items-center justify-center text-xs font-bold text-[#F3D27A]">
+                +
+              </div>
+            </div>
+            <div>
+              <div className="text-xs font-semibold text-white">Active Users</div>
+              <div className="text-[10px] text-white/50">24/7 support</div>
             </div>
           </div>
         </div>
@@ -428,53 +419,69 @@ function AboutSection() {
   const [ref, visible] = useReveal(0.2);
 
   return (
-    <section className="about-wrap" id="about" ref={ref}>
-      <div className="section">
-        <div className={`about-head reveal ${visible ? "reveal-visible" : ""}`}>
+    <section className="bg-[#141414] px-6 md:px-12 py-20 md:py-24" id="about" ref={ref}>
+      <div className="max-w-[1360px] mx-auto">
+        <div className={`max-w-2xl mb-12 transition-all duration-700 ease-[cubic-bezier(.2,.7,.2,1)] ${
+          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+        }`}>
           <Eyebrow>About Our Company</Eyebrow>
-          <h2>Built on Vision. Driven by Excellence.</h2>
-          <p>
+          <h2 className="font-display text-3xl md:text-4xl font-bold mt-2 mb-3.5">Built on Vision. Driven by Excellence.</h2>
+          <p className="text-sm text-white/55 leading-relaxed">
             With years in the field, we bring a hands-on, client-first approach to every venture.
             Our teams blend strategy, craftsmanship, and trust to deliver results that last.
           </p>
         </div>
 
-        <div className="stats-grid">
-          <div className={`stat-card stat-card-main reveal ${visible ? "reveal-visible" : ""}`}>
-            <div className="stat-brand">
-              <span className="stat-brand-mark"><Building2 size={16} /></span>
-              Vantara Group
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className={`lg:row-span-2 bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] rounded-2xl p-8 border border-white/5 transition-all duration-400 hover:-translate-y-1.5 hover:shadow-xl ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+          }`}>
+            <div className="flex items-center gap-2.5 font-display font-semibold text-base text-[#F3D27A]">
+              <span className="w-6.5 h-6.5 rounded-lg bg-[#C9A227]/15 flex items-center justify-center text-[#F3D27A]"><Building2 size={16} /></span>
+              Celetex Group
             </div>
-            <div>
-              <StatNumber value={100} suffix="+" delay={200} />
-              <div className="stat-desc">Proven track record across media, property, travel, and commerce sectors.</div>
-            </div>
-            <div className="stat-avatars">
-              <span>OA</span><span>MK</span><span>TR</span>
-              <span className="stat-avatars-more">+12</span>
+            <StatNumber value={100} suffix="+" delay={200} />
+            <div className="text-sm text-white/60 leading-relaxed max-w-xs mt-2">Proven track record across media, property, travel, and commerce sectors.</div>
+            <div className="flex mt-6">
+              <span className="w-8 h-8 rounded-full border-2 border-[#1a1a1a] bg-gradient-to-br from-[#333] to-[#222] flex items-center justify-center text-[10.5px] text-[#C9A227] font-semibold">OA</span>
+              <span className="w-8 h-8 rounded-full border-2 border-[#1a1a1a] bg-gradient-to-br from-[#333] to-[#222] flex items-center justify-center text-[10.5px] text-[#C9A227] font-semibold -ml-2.5">MK</span>
+              <span className="w-8 h-8 rounded-full border-2 border-[#1a1a1a] bg-gradient-to-br from-[#333] to-[#222] flex items-center justify-center text-[10.5px] text-[#C9A227] font-semibold -ml-2.5">TR</span>
+              <span className="w-8 h-8 rounded-full border-2 border-[#1a1a1a] bg-[#C9A227]/15 flex items-center justify-center text-[10.5px] text-[#F3D27A] font-semibold -ml-2.5">+12</span>
             </div>
           </div>
 
-          <div className={`stat-card reveal ${visible ? "reveal-visible" : ""}`} style={{ transitionDelay: "120ms" }}>
-            <div className="stat-icon-row"><div className="stat-icon-box"><Target size={18} /></div></div>
-            <div className="stat-label">Modern Strategy</div>
-            <p className="stat-body">We integrate current market intelligence and technology to ensure faster, sharper results.</p>
+          <div className={`bg-[#0a0a0a] rounded-2xl p-8 border border-white/5 transition-all duration-400 hover:-translate-y-1.5 hover:shadow-xl ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+          }`} style={{ transitionDelay: "120ms" }}>
+            <div className="flex items-center justify-between mb-2.5">
+              <div className="w-9.5 h-9.5 rounded-xl bg-[#C9A227]/8 flex items-center justify-center text-[#C9A227]"><Target size={18} /></div>
+            </div>
+            <div className="text-sm text-white/55 font-medium mt-2">Modern Strategy</div>
+            <p className="text-sm text-white/55 leading-relaxed mt-2">We integrate current market intelligence and technology to ensure faster, sharper results.</p>
           </div>
 
-          <div className={`stat-card dark reveal ${visible ? "reveal-visible" : ""}`} style={{ transitionDelay: "240ms" }}>
+          <div className={`bg-[#1a1a1a] rounded-2xl p-8 border border-white/5 transition-all duration-400 hover:-translate-y-1.5 hover:shadow-xl ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+          }`} style={{ transitionDelay: "240ms" }}>
             <StatNumber value={98} suffix="%" delay={400} />
-            <div className="stat-label">Client Satisfaction Rate</div>
+            <div className="text-sm text-white/55 font-medium mt-2">Client Satisfaction Rate</div>
           </div>
 
-          <div className={`stat-card dark reveal ${visible ? "reveal-visible" : ""}`} style={{ transitionDelay: "360ms" }}>
+          <div className={`bg-[#1a1a1a] rounded-2xl p-8 border border-white/5 transition-all duration-400 hover:-translate-y-1.5 hover:shadow-xl ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+          }`} style={{ transitionDelay: "360ms" }}>
             <StatNumber value={4} suffix="" delay={600} />
-            <div className="stat-label">Business Divisions</div>
+            <div className="text-sm text-white/55 font-medium mt-2">Business Divisions</div>
           </div>
 
-          <div className={`stat-card reveal ${visible ? "reveal-visible" : ""}`} style={{ transitionDelay: "480ms" }}>
-            <div className="stat-icon-row"><div className="stat-icon-box"><Users size={18} /></div></div>
-            <div className="stat-label">Experienced Specialists</div>
-            <p className="stat-body">Our team brings decades of combined, cross-sector, hands-on experience.</p>
+          <div className={`bg-[#0a0a0a] rounded-2xl p-8 border border-white/5 transition-all duration-400 hover:-translate-y-1.5 hover:shadow-xl ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+          }`} style={{ transitionDelay: "480ms" }}>
+            <div className="flex items-center justify-between mb-2.5">
+              <div className="w-9.5 h-9.5 rounded-xl bg-[#C9A227]/8 flex items-center justify-center text-[#C9A227]"><Users size={18} /></div>
+            </div>
+            <div className="text-sm text-white/55 font-medium mt-2">Experienced Specialists</div>
+            <p className="text-sm text-white/55 leading-relaxed mt-2">Our team brings decades of combined, cross-sector, hands-on experience.</p>
           </div>
         </div>
       </div>
@@ -514,38 +521,44 @@ function ServicesSection() {
   ];
 
   return (
-    <section className="services-wrap" id="services" ref={ref}>
-      <div className="section">
-        <div className="services-head">
-          <div className={`reveal ${visible ? "reveal-visible" : ""}`}>
+    <section className="bg-[#0a0a0a] px-6 md:px-12 py-20 md:py-24" id="services" ref={ref}>
+      <div className="max-w-[1360px] mx-auto">
+        <div className="grid md:grid-cols-[1.3fr_1fr] gap-10 items-end mb-14">
+          <div className={`transition-all duration-700 ease-[cubic-bezier(.2,.7,.2,1)] ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+          }`}>
             <Eyebrow>Our Services</Eyebrow>
-            <h2>End-to-End Solutions You Can Rely On.</h2>
+            <h2 className="font-display text-3xl md:text-4xl font-bold max-w-lg">End-to-End Solutions You Can Rely On.</h2>
           </div>
-          <p className={`reveal ${visible ? "reveal-visible" : ""}`} style={{ transitionDelay: "120ms" }}>
+          <p className={`text-sm text-white/55 leading-relaxed max-w-sm transition-all duration-700 ease-[cubic-bezier(.2,.7,.2,1)] ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+          }`} style={{ transitionDelay: "120ms" }}>
             From creative direction to property development and travel logistics — we offer comprehensive
             solutions tailored to your needs across every sector we operate in.
           </p>
         </div>
 
-        <div className="services-grid">
+        <div className="grid md:grid-cols-3 gap-7">
           {services.map((s, i) => (
             <div
               key={s.title}
-              className={`reveal ${visible ? "reveal-visible" : ""}`}
+              className={`transition-all duration-700 ease-[cubic-bezier(.2,.7,.2,1)] ${
+                visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+              }`}
               style={{ transitionDelay: `${i * 120}ms` }}
             >
-              <div className="service-card" ref={s.tilt.ref} onMouseMove={s.tilt.onMouseMove} onMouseLeave={s.tilt.onMouseLeave}>
-                <div className="service-icon"><s.icon size={22} /></div>
-                <h3>{s.title}</h3>
-                <p>{s.desc}</p>
-                <a href="#contact" className="service-link">Read More <ArrowUpRight size={15} /></a>
+              <div className="bg-[#1a1a1a] border border-white/5 rounded-2xl p-8 transition-all duration-400 hover:border-[#C9A227] hover:shadow-2xl" ref={s.tilt.ref} onMouseMove={s.tilt.onMouseMove} onMouseLeave={s.tilt.onMouseLeave}>
+                <div className="w-13 h-13 rounded-xl bg-[#C9A227]/12 text-[#F3D27A] flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-4"><s.icon size={22} /></div>
+                <h3 className="font-display text-lg font-semibold mb-3">{s.title}</h3>
+                <p className="text-sm text-white/60 leading-relaxed mb-4.5">{s.desc}</p>
+                <a href="#contact" className="inline-flex items-center gap-2 text-sm font-semibold text-[#F3D27A] no-underline group"><span>Read More</span> <ArrowUpRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" /></a>
               </div>
             </div>
           ))}
         </div>
 
-        <Reveal delay={200} className="services-cta-wrap">
-          <a href="#contact" className="btn btn-ghost-dark">Explore All Services <ArrowRight size={16} /></a>
+        <Reveal delay={200} className="flex justify-center mt-12">
+          <a href="#contact" className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-white bg-transparent border border-white/15 transition-all duration-300 hover:border-[#C9A227] hover:text-[#F3D27A] no-underline">Explore All Services <ArrowRight size={16} /></a>
         </Reveal>
       </div>
     </section>
@@ -584,37 +597,39 @@ function ProjectsSection() {
   ];
 
   return (
-    <section className="section" id="projects" ref={ref}>
-      <div className={`section-head-center reveal ${visible ? "reveal-visible" : ""}`}>
+    <section className="px-6 md:px-12 py-20 md:py-24 max-w-[1360px] mx-auto" id="projects" ref={ref}>
+      <div className={`text-center max-w-2xl mx-auto mb-14 transition-all duration-700 ease-[cubic-bezier(.2,.7,.2,1)] ${
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+      }`}>
         <Eyebrow>Our Projects</Eyebrow>
-        <h2>Crafted Ventures, Proven Results.</h2>
-        <p>We don't just deliver — we craft. Every engagement reflects thoughtful planning, expert execution, and precise delivery.</p>
+        <h2 className="font-display text-3xl md:text-4xl font-bold mt-2 mb-3.5">Crafted Ventures, Proven Results.</h2>
+        <p className="text-sm text-white/55 leading-relaxed">We don't just deliver — we craft. Every engagement reflects thoughtful planning, expert execution, and precise delivery.</p>
       </div>
 
-      <div className="projects-grid">
+      <div className="grid md:grid-cols-3 gap-7">
         {projects.map((p, i) => (
           <Reveal key={p.title} delay={i * 120}>
-            <div className="project-card">
-              <div className="project-img-wrap">
-                <img src={p.img} alt={p.title} loading="lazy" />
-                <div className="project-img-overlay" />
+            <div className="bg-[#1a1a1a] border border-white/5 rounded-2xl overflow-hidden transition-all duration-400 hover:-translate-y-1.5 hover:shadow-2xl">
+              <div className="relative h-48 overflow-hidden">
+                <img src={p.img} alt={p.title} className="w-full h-full object-cover transition-transform duration-600 hover:scale-110" loading="lazy" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#C9A227]/10 to-black/35" />
               </div>
-              <div className="project-body">
-                <h4>{p.title}</h4>
-                <p>{p.desc}</p>
-                <div className="project-meta">
-                  <span><MapPin size={13} /> {p.loc}</span>
-                  <span><Clock size={13} /> {p.date}</span>
+              <div className="p-6 md:p-6.5">
+                <h4 className="font-display text-base font-semibold mb-2">{p.title}</h4>
+                <p className="text-sm text-white/60 leading-relaxed mb-4">{p.desc}</p>
+                <div className="flex gap-4 mb-4 flex-wrap">
+                  <span className="flex items-center gap-1.5 text-xs text-white/50"><MapPin size={13} /> {p.loc}</span>
+                  <span className="flex items-center gap-1.5 text-xs text-white/50"><Clock size={13} /> {p.date}</span>
                 </div>
-                <a href="#contact" className="project-link">View More <ArrowUpRight size={14} /></a>
+                <a href="#contact" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#F3D27A] no-underline">View More <ArrowUpRight size={14} /></a>
               </div>
             </div>
           </Reveal>
         ))}
       </div>
 
-      <Reveal delay={300} className="services-cta-wrap">
-        <a href="#contact" className="btn btn-ghost-dark">Explore All Projects <ArrowRight size={16} /></a>
+      <Reveal delay={300} className="flex justify-center mt-12">
+        <a href="#contact" className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-white bg-transparent border border-white/15 transition-all duration-300 hover:border-[#C9A227] hover:text-[#F3D27A] no-underline">Explore All Projects <ArrowRight size={16} /></a>
       </Reveal>
     </section>
   );
@@ -627,8 +642,10 @@ function ProjectsSection() {
 function ProcessLine() {
   const [ref, visible] = useReveal(0.4);
   return (
-    <div className="process-line" ref={ref}>
-      <div className="process-line-fill" style={{ width: visible ? "100%" : "0%" }} />
+    <div className="absolute top-11 left-0 right-0 h-px bg-white/5 overflow-hidden" ref={ref}>
+      <div className={`h-full bg-gradient-to-r from-[#F3D27A] to-[#C9A227] transition-all duration-1400 ease-[cubic-bezier(.2,.7,.2,1)] ${
+        visible ? "w-full" : "w-0"
+      }`} />
     </div>
   );
 }
@@ -644,27 +661,33 @@ function ProcessSection() {
   ];
 
   return (
-    <section className="process-wrap" id="process" ref={ref}>
-      <div className="section">
-        <div className="process-head">
-          <div className={`reveal ${visible ? "reveal-visible" : ""}`}>
+    <section className="bg-[#141414] px-6 md:px-12 py-20 md:py-24" id="process" ref={ref}>
+      <div className="max-w-[1360px] mx-auto">
+        <div className="grid md:grid-cols-[1.3fr_1fr] gap-10 items-end mb-16">
+          <div className={`transition-all duration-700 ease-[cubic-bezier(.2,.7,.2,1)] ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+          }`}>
             <Eyebrow>Our Process</Eyebrow>
-            <h2>Our 4-Step Process to Sustainable Growth.</h2>
+            <h2 className="font-display text-3xl md:text-4xl font-bold max-w-lg">Our 4-Step Process to Sustainable Growth.</h2>
           </div>
-          <p className={`reveal ${visible ? "reveal-visible" : ""}`} style={{ transitionDelay: "120ms" }}>
+          <p className={`text-sm text-white/55 leading-relaxed max-w-sm transition-all duration-700 ease-[cubic-bezier(.2,.7,.2,1)] ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+          }`} style={{ transitionDelay: "120ms" }}>
             We don't just deliver — we partner. Every engagement reflects thoughtful planning,
             expert execution, and precise follow-through.
           </p>
         </div>
 
-        <div className="process-grid">
+        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
           <ProcessLine />
           {steps.map((step, i) => (
-            <div key={step.n} className={`process-step reveal ${visible ? "reveal-visible" : ""}`} style={{ transitionDelay: `${i * 100}ms` }}>
-              <div className="process-num">{step.n}</div>
-              <div className="process-icon"><step.icon size={20} /></div>
-              <h3>{step.title}</h3>
-              <p>{step.desc}</p>
+            <div key={step.n} className={`pr-6 relative transition-all duration-700 ease-[cubic-bezier(.2,.7,.2,1)] ${
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+            }`} style={{ transitionDelay: `${i * 100}ms` }}>
+              <div className="font-display text-5xl font-bold text-white/5 mb-4.5">{step.n}</div>
+              <div className="w-11 h-11 rounded-xl bg-[#C9A227]/12 text-[#F3D27A] flex items-center justify-center mb-4.5 relative z-10 transition-transform duration-300 hover:scale-110 hover:-rotate-4"><step.icon size={20} /></div>
+              <h3 className="font-display text-base font-semibold mb-2.5">{step.title}</h3>
+              <p className="text-sm text-white/55 leading-relaxed max-w-xs">{step.desc}</p>
             </div>
           ))}
         </div>
@@ -680,20 +703,22 @@ function ProcessSection() {
 function TestimonialStrip() {
   const [ref, visible] = useReveal(0.3);
   return (
-    <section className="section" ref={ref}>
-      <div className={`testimonial-card reveal ${visible ? "reveal-visible" : ""}`}>
-        <div className="testimonial-stars">
+    <section className="px-6 md:px-12 py-20 md:py-24 max-w-[1360px] mx-auto" ref={ref}>
+      <div className={`bg-[#1a1a1a] border border-white/5 rounded-3xl p-8 md:p-14 max-w-3xl mx-auto text-center transition-all duration-700 ease-[cubic-bezier(.2,.7,.2,1)] ${
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"
+      }`}>
+        <div className="flex justify-center gap-1 mb-5">
           {Array.from({ length: 5 }).map((_, i) => <Star key={i} size={16} fill="#C9A227" stroke="#C9A227" />)}
         </div>
-        <p className="testimonial-quote">
+        <p className="font-display text-lg md:text-xl font-medium leading-relaxed text-white mb-6">
           Working across media, property, and logistics with one partner has simplified everything.
           The team plans meticulously and delivers exactly what was promised, on schedule.
         </p>
-        <div className="testimonial-author">
-          <span className="testimonial-avatar">DK</span>
-          <div>
-            <div className="testimonial-name">Dara Kalu</div>
-            <div className="testimonial-role">Operations Director, Northbridge Retail</div>
+        <div className="flex items-center justify-center gap-3">
+          <span className="w-10 h-10 rounded-full bg-[#C9A227]/15 text-[#F3D27A] flex items-center justify-center text-sm font-semibold">DK</span>
+          <div className="text-left">
+            <div className="text-sm font-semibold text-white">Dara Kalu</div>
+            <div className="text-xs text-white/50">Operations Director, Northbridge Retail</div>
           </div>
         </div>
       </div>
@@ -710,182 +735,8 @@ export default function App() {
   const [ctaRef, ctaVisible] = useReveal(0.2);
 
   return (
-    <div className="ag-root">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
-
-        :root{
-          --white:#faf9f6; --off:#f5f2ec; --black:#0a0a0a; --charcoal:#1a1a1a; --charcoal-2:#141414;
-          --gold:#C9A227; --gold-bright:#F3D27A; --gold-deep:#8C6A22;
-          --line:rgba(255,255,255,0.06); --line-strong:rgba(255,255,255,0.12);
-        }
-        *{ box-sizing:border-box; margin:0; padding:0; }
-        .ag-root{ font-family:'Inter', sans-serif; background:var(--black); color:var(--white); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
-        .ag-root h1, .ag-root h2, .ag-root h3, .ag-root .display{ font-family:'Space Grotesk', sans-serif; letter-spacing:-0.02em; }
-        a{ color:inherit; }
-        button{ font-family:inherit; cursor:pointer; }
-
-        .progress-thread{ position:fixed; top:0; left:0; width:3px; height:100vh; z-index:60; background:linear-gradient(180deg,var(--gold-bright),var(--gold) 40%, transparent 100%); transform-origin:top; pointer-events:none; transition:transform .1s linear; }
-
-        .reveal{ opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
-        .reveal-visible{ opacity:1; transform:translateY(0); }
-        .reveal-scale{ opacity:0; transform:scale(0.85); transition:opacity .6s cubic-bezier(.22,.61,.36,1), transform .6s cubic-bezier(.22,.61,.36,1); display:inline-block; }
-        .reveal-scale-visible{ opacity:1; transform:scale(1); }
-
-        .eyebrow{ display:inline-flex; align-items:center; gap:10px; font-family:'IBM Plex Mono', monospace; font-size:12.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
-        .eyebrow-chip{ width:8px; height:8px; background:var(--gold); border-radius:2px; display:inline-block; }
-
-        /* HERO */
-        .hero{ padding:64px 48px 100px; position:relative; }
-        .hero-inner{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; max-width:1360px; margin:0 auto; }
-        .hero h1{ font-size:52px; line-height:1.1; font-weight:700; margin:0 0 22px; }
-        .hero h1 .accent{ background:linear-gradient(90deg,var(--gold-bright),var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-        .hero p.lead{ font-size:17px; line-height:1.7; color:rgba(255,255,255,0.6); max-width:480px; margin-bottom:36px; }
-        .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; }
-        .hero-ctas a{ transition:transform .2s ease; }
-        .hero-ctas a:active{ transform:scale(0.97); }
-
-        .hero-visual{ position:relative; height:520px; opacity:0; transform:scale(0.94); transition:opacity .8s cubic-bezier(.22,.61,.36,1) .15s, transform .8s cubic-bezier(.22,.61,.36,1) .15s; }
-        .hero-visual.reveal-visible{ opacity:1; transform:scale(1); }
-        .hero-img-main{ position:absolute; top:0; right:0; width:70%; height:80%; border-radius:20px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.5); border:1px solid var(--line); }
-        .hero-img-main img{ width:100%; height:100%; object-fit:cover; display:block; }
-        .hero-img-glow{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,10,10,0) 40%, rgba(10,10,10,0.55) 100%); }
-        .hero-img-sub{ position:absolute; bottom:0; left:0; width:44%; height:52%; border-radius:16px; overflow:hidden; box-shadow:0 25px 60px rgba(0,0,0,0.5); border:1px solid var(--line); }
-        .hero-img-sub img{ width:100%; height:100%; object-fit:cover; display:block; }
-        .hero-badge{ position:absolute; top:24px; left:-10px; background:rgba(12,12,12,0.94); border:1px solid var(--line); border-radius:14px; padding:14px 18px; display:flex; align-items:center; gap:12px; box-shadow:0 20px 40px rgba(0,0,0,0.4); }
-        .hero-badge-icon{ width:36px; height:36px; border-radius:10px; background:rgba(201,162,39,0.12); display:flex; align-items:center; justify-content:center; color:var(--gold-bright); }
-        .hero-badge-num{ font-family:'Space Grotesk'; font-weight:700; font-size:17px; color:var(--white); line-height:1.1; }
-        .hero-badge-label{ font-size:11px; color:rgba(255,255,255,0.55); }
-
-        /* SECTION GENERIC */
-        .section{ padding:100px 48px; max-width:1360px; margin:0 auto; }
-        .section-head-center{ text-align:center; max-width:640px; margin:0 auto 56px; }
-        .section-head-center h2{ font-size:36px; font-weight:700; margin:8px 0 14px; }
-        .section-head-center p{ font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; }
-
-        /* ABOUT */
-        .about-wrap{ background:var(--charcoal-2); }
-        .about-head{ max-width:680px; margin-bottom:48px; }
-        .about-head h2{ font-size:36px; font-weight:700; margin:8px 0 14px; }
-        .about-head p{ font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; }
-        .stats-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr; grid-template-rows:auto auto; gap:20px; }
-        .stat-card{ background:var(--black); color:var(--white); border-radius:18px; padding:32px; position:relative; overflow:hidden; transition:transform .4s ease, box-shadow .4s ease; border:1px solid var(--line); }
-        .stat-card:hover{ transform:translateY(-6px); box-shadow:0 12px 30px rgba(0,0,0,0.3); }
-        .stat-card.dark{ background:var(--charcoal); border-color:var(--line); }
-        .stat-card-main{ grid-row:span 2; background:linear-gradient(135deg,var(--charcoal),var(--black)); }
-        .stat-brand{ display:flex; align-items:center; gap:10px; font-family:'Space Grotesk'; font-weight:600; font-size:16px; color:var(--gold-bright); }
-        .stat-brand-mark{ width:26px; height:26px; border-radius:8px; background:rgba(201,162,39,0.15); display:flex; align-items:center; justify-content:center; color:var(--gold-bright); }
-        .stat-number{ font-family:'Space Grotesk'; font-weight:700; font-size:52px; display:block; margin:24px 0 8px; }
-        .stat-card-main .stat-number{ font-size:60px; }
-        .stat-desc{ font-size:14px; color:rgba(255,255,255,0.6); line-height:1.6; max-width:260px; }
-        .stat-avatars{ display:flex; margin-top:24px; }
-        .stat-avatars span{ width:32px; height:32px; border-radius:50%; border:2px solid var(--charcoal); background:linear-gradient(135deg,#333,#222); margin-left:-10px; display:flex; align-items:center; justify-content:center; font-size:10.5px; color:var(--gold); font-weight:600; }
-        .stat-avatars span:first-child{ margin-left:0; }
-        .stat-avatars-more{ background:rgba(201,162,39,0.15) !important; color:var(--gold-bright) !important; }
-        .stat-icon-row{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
-        .stat-icon-box{ width:38px; height:38px; border-radius:10px; background:rgba(201,162,39,0.08); display:flex; align-items:center; justify-content:center; color:var(--gold); }
-        .stat-label{ font-size:13.5px; color:rgba(255,255,255,0.55); margin-top:8px; font-weight:500; }
-        .stat-body{ font-size:13.5px; color:rgba(255,255,255,0.55); margin-top:8px; line-height:1.6; }
-
-        /* SERVICES */
-        .services-wrap{ background:var(--black); }
-        .services-head{ display:grid; grid-template-columns:1.3fr 1fr; gap:40px; align-items:flex-end; margin-bottom:56px; }
-        .services-head h2{ font-size:36px; font-weight:700; max-width:520px; }
-        .services-head p{ font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; max-width:340px; }
-        .services-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
-        .service-card{ background:var(--charcoal); border:1px solid var(--line); border-radius:20px; padding:32px; transition:border-color .4s ease, box-shadow .4s ease; }
-        .service-card:hover{ border-color:var(--gold); box-shadow:0 20px 50px rgba(0,0,0,0.35); }
-        .service-icon{ width:52px; height:52px; border-radius:14px; background:rgba(201,162,39,0.12); color:var(--gold-bright); display:flex; align-items:center; justify-content:center; margin-bottom:22px; transition:transform .3s ease; }
-        .service-card:hover .service-icon{ transform:scale(1.1) rotate(-4deg); }
-        .service-card h3{ font-size:19px; font-weight:600; margin:0 0 12px; }
-        .service-card p{ font-size:14px; color:rgba(255,255,255,0.6); line-height:1.7; margin-bottom:18px; }
-        .service-link{ display:inline-flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600; color:var(--gold-bright); text-decoration:none; }
-        .service-link svg{ transition:transform .3s ease; }
-        .service-link:hover svg{ transform:translateX(4px); }
-        .services-cta-wrap{ display:flex; justify-content:center; margin-top:48px; }
-
-        /* PROJECTS */
-        .projects-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
-        .project-card{ background:var(--charcoal); border:1px solid var(--line); border-radius:20px; overflow:hidden; transition:transform .4s ease, box-shadow .4s ease; }
-        .project-card:hover{ transform:translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,0.4); }
-        .project-img-wrap{ position:relative; height:190px; overflow:hidden; }
-        .project-img-wrap img{ width:100%; height:100%; object-fit:cover; transition:transform .6s ease; display:block; }
-        .project-card:hover .project-img-wrap img{ transform:scale(1.08); }
-        .project-img-overlay{ position:absolute; inset:0; background:linear-gradient(135deg, rgba(201,162,39,0.08), rgba(0,0,0,0.35)); }
-        .project-body{ padding:24px 26px 26px; }
-        .project-body h4{ font-size:17px; font-weight:600; margin:0 0 8px; font-family:'Space Grotesk'; }
-        .project-body p{ font-size:13.5px; color:rgba(255,255,255,0.6); line-height:1.6; margin-bottom:16px; }
-        .project-meta{ display:flex; gap:16px; margin-bottom:16px; flex-wrap:wrap; }
-        .project-meta span{ display:flex; align-items:center; gap:6px; font-size:12px; color:rgba(255,255,255,0.5); }
-        .project-link{ display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; color:var(--gold-bright); text-decoration:none; }
-
-        /* PROCESS */
-        .process-wrap{ background:var(--charcoal-2); }
-        .process-head{ display:grid; grid-template-columns:1.3fr 1fr; gap:40px; align-items:flex-end; margin-bottom:64px; }
-        .process-head h2{ font-size:36px; font-weight:700; max-width:520px; }
-        .process-head p{ font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; max-width:340px; }
-        .process-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
-        .process-line{ position:absolute; top:44px; left:0; right:0; height:1px; background:rgba(255,255,255,0.06); overflow:hidden; }
-        .process-line-fill{ height:100%; background:linear-gradient(90deg,var(--gold-bright),var(--gold)); width:0%; transition:width 1.4s cubic-bezier(.2,.7,.2,1); }
-        .process-step{ padding:0 24px 0 0; position:relative; }
-        .process-num{ font-family:'Space Grotesk'; font-size:44px; font-weight:700; color:rgba(255,255,255,0.06); margin-bottom:18px; }
-        .process-icon{ width:44px; height:44px; border-radius:12px; background:rgba(201,162,39,0.12); color:var(--gold-bright); display:flex; align-items:center; justify-content:center; margin-bottom:18px; position:relative; z-index:2; transition:transform .3s ease; }
-        .process-step:hover .process-icon{ transform:scale(1.1) rotate(-5deg); }
-        .process-step h3{ font-size:16.5px; font-weight:600; margin:0 0 10px; }
-        .process-step p{ font-size:13.5px; color:rgba(255,255,255,0.55); line-height:1.6; margin:0; max-width:240px; }
-
-        /* TESTIMONIAL */
-        .testimonial-card{ background:var(--charcoal); border:1px solid var(--line); border-radius:24px; padding:56px; max-width:760px; margin:0 auto; text-align:center; }
-        .testimonial-stars{ display:flex; justify-content:center; gap:4px; margin-bottom:22px; }
-        .testimonial-quote{ font-size:19px; line-height:1.6; color:var(--white); font-family:'Space Grotesk'; font-weight:500; margin-bottom:26px; }
-        .testimonial-author{ display:flex; align-items:center; justify-content:center; gap:12px; }
-        .testimonial-avatar{ width:40px; height:40px; border-radius:50%; background:rgba(201,162,39,0.15); color:var(--gold-bright); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; }
-        .testimonial-name{ font-size:14px; font-weight:600; color:var(--white); text-align:left; }
-        .testimonial-role{ font-size:12.5px; color:rgba(255,255,255,0.5); text-align:left; }
-
-        /* CTA */
-        .cta-banner{ margin:0 48px 100px; border-radius:24px; padding:64px; background:linear-gradient(120deg,#1a1a1a 0%,#0a0a0a 60%,#1a1a1a 100%); position:relative; overflow:hidden; display:flex; align-items:center; justify-content:space-between; gap:40px; border:1px solid var(--line); opacity:0; transform:scale(0.94); transition:opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1); }
-        .cta-banner.reveal-visible{ opacity:1; transform:scale(1); }
-        .cta-banner::after{ content:''; position:absolute; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle, rgba(201,162,39,0.08), transparent 70%); top:-160px; right:-100px; }
-        .cta-banner h2{ font-size:30px; max-width:460px; margin:0 0 8px; position:relative; z-index:1; }
-        .cta-banner p{ color:rgba(255,255,255,0.6); max-width:420px; margin:0; position:relative; z-index:1; }
-        .cta-actions{ position:relative; z-index:1; display:flex; gap:14px; flex-shrink:0; flex-wrap:wrap; }
-
-        /* FOOTER */
-        .footer{ background:var(--black); color:rgba(255,255,255,0.6); padding:64px 48px 32px; border-top:1px solid var(--line); }
-        .footer-top{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:56px; }
-        .footer-brand-text{ font-size:13.5px; line-height:1.7; margin-top:16px; max-width:280px; }
-        .footer-col h4{ color:var(--white); font-size:13.5px; margin:0 0 18px; letter-spacing:0.04em; text-transform:uppercase; font-family:'IBM Plex Mono', monospace; }
-        .footer-col a{ display:block; font-size:14px; margin-bottom:12px; color:rgba(255,255,255,0.6); text-decoration:none; transition:color .25s ease; }
-        .footer-col a:hover{ color:var(--gold-bright); }
-        .footer-bottom{ display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--line); padding-top:28px; font-size:12.5px; flex-wrap:wrap; gap:12px; }
-
-        @media (max-width:980px){
-          .hero-inner{ grid-template-columns:1fr; }
-          .hero h1{ font-size:38px; }
-          .hero-visual{ height:400px; margin-top:40px; }
-          .stats-grid{ grid-template-columns:1fr 1fr; }
-          .stat-card-main{ grid-column:span 2; grid-row:auto; }
-          .services-head, .process-head{ grid-template-columns:1fr; }
-          .services-grid, .projects-grid{ grid-template-columns:1fr; }
-          .process-grid{ grid-template-columns:1fr 1fr; row-gap:40px; }
-          .process-line{ display:none; }
-          .cta-banner{ flex-direction:column; align-items:flex-start; padding:40px; margin:0 20px 60px; }
-          .footer-top{ grid-template-columns:1fr 1fr; }
-          .section{ padding:72px 24px; }
-          .hero{ padding:32px 24px 72px; }
-          .testimonial-card{ padding:36px 28px; }
-        }
-        @media (max-width:600px){
-          .process-grid{ grid-template-columns:1fr; }
-          .hero-badge{ left:0; top:12px; }
-        }
-        @media (prefers-reduced-motion: reduce){
-          .reveal, .reveal-scale, .hero-visual, .hero-badge, .cta-banner, .stat-card{ transition:none !important; opacity:1 !important; transform:none !important; }
-        }
-      `}</style>
-
-      <div className="progress-thread" style={{ transform: `scaleY(${progress})` }} />
+    <div className="bg-[#0a0a0a] text-white font-sans overflow-x-hidden antialiased">
+      <div className="fixed top-0 left-0 w-1 h-screen z-[60] bg-gradient-to-b from-[#F3D27A] via-[#C9A227] to-transparent pointer-events-none origin-top transition-transform duration-100 linear" style={{ transform: `scaleY(${progress})` }} />
 
       <NavBar scrolled={scrolled} />
 
@@ -897,52 +748,54 @@ export default function App() {
       <TestimonialStrip />
 
       <div ref={ctaRef}>
-        <div className={`cta-banner ${ctaVisible ? "reveal-visible" : ""}`} id="contact">
-          <div>
-            <h2>Ready to partner with Vantara Group?</h2>
-            <p>Connect with our team today and let's build something extraordinary across every sector we serve.</p>
+        <div className={`mx-6 md:mx-12 mb-16 md:mb-24 rounded-2xl p-8 md:p-16 bg-gradient-to-br from-[#1a1a1a] via-[#0a0a0a] to-[#1a1a1a] relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-10 border border-white/5 transition-all duration-700 ease-[cubic-bezier(.22,.61,.36,1)] ${
+          ctaVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+        }`}>
+          <div className="absolute w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,rgba(201,162,39,0.08),transparent_70%)] -top-40 -right-24" />
+          <div className="relative z-10">
+            <h2 className="font-display text-2xl md:text-3xl font-bold max-w-lg mb-2">Ready to partner with Celetex Group?</h2>
+            <p className="text-white/60 max-w-md">Connect with our team today and let's build something extraordinary across every sector we serve.</p>
           </div>
-          <div className="cta-actions">
-            <a href="mailto:hello@vantaragroup.com" className="btn btn-gold"><Mail size={16} /> Email Us</a>
-            <a href="tel:+2348140784286" className="btn btn-ghost-dark"><Phone size={16} /> Call Now</a>
+          <div className="relative z-10 flex flex-wrap gap-3.5 flex-shrink-0">
+            <a href="mailto:hello@celetexgroup.com" className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-[#0a0a0a] bg-gradient-to-r from-[#F3D27A] to-[#C9A227] border border-transparent transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(201,162,39,0.35)] active:scale-95 no-underline"><Mail size={16} /> Email Us</a>
+            <a href="tel:+2348140784286" className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-white bg-transparent border border-white/15 transition-all duration-300 hover:border-[#C9A227] hover:text-[#F3D27A] no-underline"><Phone size={16} /> Call Now</a>
           </div>
         </div>
       </div>
 
-      <footer className="footer">
-        <div className="footer-top">
-          <div>
-            <a href="#home" className="nav-logo">
-              <span className="nav-logo-mark"><Building2 size={20} strokeWidth={2.4} /></span>
-              <span className="nav-logo-text" style={{ color: "#fff" }}>Vantara <span>Group</span></span>
-            </a>
-            <p className="footer-brand-text">
-              A multi-sector enterprise delivering strategic solutions across media, real estate,
-              travel, and digital commerce.
-            </p>
+      <footer className="bg-[#0a0a0a] text-white/60 px-6 md:px-12 py-16 md:py-20 border-t border-white/5">
+        <div className="max-w-[1360px] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
+            <div>
+              <a href="#home" className="flex items-center gap-3 no-underline">
+                <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#F3D27A] to-[#C9A227] flex items-center justify-center text-[#0a0a0a] border-2 border-[#C9A227]/30 shadow-[0_0_30px_rgba(201,162,39,0.15)] flex-shrink-0"><Building2 size={20} strokeWidth={2.4} /></span>
+                <span className="font-display font-extrabold text-lg tracking-wide text-white">Celetex <span className="text-[#C9A227]">Group</span></span>
+              </a>
+              <p className="text-sm leading-relaxed mt-4 max-w-xs">A multi-sector enterprise delivering strategic solutions across media, real estate, travel, and digital commerce.</p>
+            </div>
+            <div>
+              <h4 className="text-white text-sm uppercase tracking-wider font-mono mb-4.5">Services</h4>
+              <a href="#services" className="block text-sm mb-3 text-white/60 no-underline transition-colors duration-300 hover:text-[#F3D27A]">Media & Creative</a>
+              <a href="#services" className="block text-sm mb-3 text-white/60 no-underline transition-colors duration-300 hover:text-[#F3D27A]">Real Estate</a>
+              <a href="#services" className="block text-sm mb-3 text-white/60 no-underline transition-colors duration-300 hover:text-[#F3D27A]">Travel & Logistics</a>
+            </div>
+            <div>
+              <h4 className="text-white text-sm uppercase tracking-wider font-mono mb-4.5">Contact</h4>
+              <a href="mailto:hello@celetexgroup.com" className="block text-sm mb-3 text-white/60 no-underline transition-colors duration-300 hover:text-[#F3D27A]">hello@celetexgroup.com</a>
+              <a href="tel:+2348140784286" className="block text-sm mb-3 text-white/60 no-underline transition-colors duration-300 hover:text-[#F3D27A]">+234 814 078 4286</a>
+            </div>
+            <div>
+              <h4 className="text-white text-sm uppercase tracking-wider font-mono mb-4.5">Quick Links</h4>
+              <a href="#about" className="block text-sm mb-3 text-white/60 no-underline transition-colors duration-300 hover:text-[#F3D27A]">About Us</a>
+              <a href="#projects" className="block text-sm mb-3 text-white/60 no-underline transition-colors duration-300 hover:text-[#F3D27A]">Projects</a>
+              <a href="#process" className="block text-sm mb-3 text-white/60 no-underline transition-colors duration-300 hover:text-[#F3D27A]">Our Process</a>
+              <a href="#contact" className="block text-sm mb-3 text-white/60 no-underline transition-colors duration-300 hover:text-[#F3D27A]">Contact</a>
+            </div>
           </div>
-          <div className="footer-col">
-            <h4>Services</h4>
-            <a href="#services">Media & Creative</a>
-            <a href="#services">Real Estate</a>
-            <a href="#services">Travel & Logistics</a>
+          <div className="flex flex-wrap justify-between items-center border-t border-white/5 pt-7 text-xs gap-3">
+            <span>© 2026 Celetex Group. All rights reserved.</span>
+            <span>Black · Gold · White</span>
           </div>
-          <div className="footer-col">
-            <h4>Contact</h4>
-            <a href="mailto:hello@vantaragroup.com">hello@vantaragroup.com</a>
-            <a href="tel:+2348140784286">+234 814 078 4286</a>
-          </div>
-          <div className="footer-col">
-            <h4>Quick Links</h4>
-            <a href="#about">About Us</a>
-            <a href="#projects">Projects</a>
-            <a href="#process">Our Process</a>
-            <a href="#contact">Contact</a>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <span>© 2026 Vantara Group. All rights reserved.</span>
-          <span>Black · Gold · White</span>
         </div>
       </footer>
     </div>
