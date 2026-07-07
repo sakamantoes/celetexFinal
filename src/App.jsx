@@ -23,6 +23,7 @@ import {
   BadgeCheck,
   Package,
   MapPin,
+  ChevronUp,
 } from "lucide-react";
 
 // IMPORT IMAGES - Make sure this path is correct for your project
@@ -204,6 +205,45 @@ function StatNumber({ value, suffix = "", decimals = 0, delay = 0 }) {
       {count.toFixed(decimals)}
       {suffix}
     </span>
+  );
+}
+
+/* ----------------------------------------------------------------------
+   BACK TO TOP BUTTON
+---------------------------------------------------------------------- */
+
+function BackToTop() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 500) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener("scroll", toggleVisibility);
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <button
+      className={`back-to-top ${isVisible ? "visible" : ""}`}
+      onClick={scrollToTop}
+      aria-label="Back to top"
+    >
+      <ChevronUp size={24} />
+      <span className="back-to-top-label">Top</span>
+    </button>
   );
 }
 
@@ -1359,6 +1399,9 @@ export default function App() {
 
       <HeroSection />
 
+      {/* BACK TO TOP BUTTON */}
+      <BackToTop />
+
       {/* ABOUT / STATS */}
       <section className="stats-wrap" id="about" ref={statsRef}>
         <div className="section">
@@ -1646,6 +1689,100 @@ export default function App() {
           <span className="mono">Black · Gold · White</span>
         </div>
       </footer>
+
+      <style>{`
+        .back-to-top {
+          position: fixed;
+          bottom: 30px;
+          right: 30px;
+          z-index: 99;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+          color: #0a0a0a;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0px;
+          box-shadow: 0 4px 20px rgba(201,162,39,0.3);
+          transform: translateY(100px);
+          opacity: 0;
+          transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+          transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                      opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+                      box-shadow 0.3s ease;
+        }
+
+        .back-to-top.visible {
+          transform: translateY(0);
+          opacity: 1;
+        }
+
+        .back-to-top:hover {
+          transform: translateY(-4px) scale(1.05);
+          box-shadow: 0 8px 30px rgba(201,162,39,0.5);
+        }
+
+        .back-to-top:active {
+          transform: scale(0.95);
+        }
+
+        .back-to-top-label {
+          font-size: 8px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+          margin-top: -2px;
+        }
+
+        .back-to-top svg {
+          transition: transform 0.3s ease;
+        }
+
+        .back-to-top:hover svg {
+          transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+          .back-to-top {
+            bottom: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+          }
+          
+          .back-to-top-label {
+            font-size: 7px;
+          }
+          
+          .back-to-top svg {
+            width: 20px;
+            height: 20px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .back-to-top {
+            bottom: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+          }
+          
+          .back-to-top-label {
+            display: none;
+          }
+          
+          .back-to-top svg {
+            width: 22px;
+            height: 22px;
+          }
+        }
+      `}</style>
     </div>
   );
 }
