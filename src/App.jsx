@@ -13,7 +13,7 @@ import { CTABanner } from './components/sections/CTABanner';
 import { Footer } from './components/sections/Footer';
 import images from './assets/image';
 
-// Scroll Animator Component - Gold Theme
+// Scroll Animator Component - Gold Theme (Responsive)
 const ScrollAnimator = ({ children, delay = 0, direction = 'up' }) => {
   const [ref, setRef] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -29,8 +29,8 @@ const ScrollAnimator = ({ children, delay = 0, direction = 'up' }) => {
         }
       },
       {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px',
+        threshold: 0.1,
+        rootMargin: '0px 0px -30px 0px',
       }
     );
 
@@ -39,10 +39,10 @@ const ScrollAnimator = ({ children, delay = 0, direction = 'up' }) => {
   }, [ref]);
 
   const directionMap = {
-    up: { y: 60, x: 0 },
-    down: { y: -60, x: 0 },
-    left: { y: 0, x: 60 },
-    right: { y: 0, x: -60 },
+    up: { y: 40, x: 0 },
+    down: { y: -40, x: 0 },
+    left: { y: 0, x: 40 },
+    right: { y: 0, x: -40 },
   };
 
   const { y, x } = directionMap[direction] || directionMap.up;
@@ -56,7 +56,7 @@ const ScrollAnimator = ({ children, delay = 0, direction = 'up' }) => {
         y: 0, 
         x: 0,
         transition: {
-          duration: 0.8,
+          duration: 0.7,
           ease: [0.22, 1, 0.36, 1],
           delay: delay,
         }
@@ -66,37 +66,37 @@ const ScrollAnimator = ({ children, delay = 0, direction = 'up' }) => {
         x 
       }}
     >
-      {/* Gold Reveal Line */}
+      {/* Gold Reveal Line - Responsive */}
       <motion.div
         className="relative"
-        initial={{ 
-          opacity: 0,
-        }}
-        animate={isVisible ? {
-          opacity: 1,
-        } : {
-          opacity: 0,
-        }}
+        initial={{ opacity: 0 }}
+        animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.6, delay: delay + 0.2 }}
       >
-        <div className="absolute -left-8 top-0 bottom-0 w-[2px] bg-gradient-to-b from-gold/0 via-gold to-gold/0 hidden lg:block">
+        {/* Left Gold Line - Desktop only */}
+        <div className="absolute -left-6 md:-left-8 top-0 bottom-0 w-[2px] bg-gradient-to-b from-gold/0 via-gold to-gold/0 hidden lg:block">
           <motion.div
             className="absolute top-0 left-0 right-0 h-0 bg-gold"
-            animate={isVisible ? {
-              height: '100%',
-            } : {
-              height: '0%',
-            }}
+            animate={isVisible ? { height: '100%' } : { height: '0%' }}
             transition={{ duration: 0.8, delay: delay + 0.3, ease: [0.22, 1, 0.36, 1] }}
           />
         </div>
         
-        {/* Gold Glow Effect */}
+        {/* Top Gold Line - Mobile/Tablet */}
+        <div className="absolute -top-6 left-0 right-0 h-[2px] bg-gradient-to-r from-gold/0 via-gold to-gold/0 block lg:hidden">
+          <motion.div
+            className="absolute top-0 left-0 right-0 h-full bg-gold"
+            animate={isVisible ? { width: '100%' } : { width: '0%' }}
+            transition={{ duration: 0.8, delay: delay + 0.3, ease: [0.22, 1, 0.36, 1] }}
+          />
+        </div>
+        
+        {/* Gold Glow Effect - Responsive */}
         <motion.div
-          className="absolute inset-0 pointer-events-none -z-10 hidden lg:block"
+          className="absolute inset-0 pointer-events-none -z-10"
           initial={{ opacity: 0 }}
           animate={isVisible ? {
-            opacity: 0.04,
+            opacity: 0.03,
             scale: 1,
           } : {
             opacity: 0,
@@ -104,7 +104,7 @@ const ScrollAnimator = ({ children, delay = 0, direction = 'up' }) => {
           }}
           transition={{ duration: 0.8, delay: delay + 0.1 }}
         >
-          <div className="absolute inset-0 bg-gold blur-3xl rounded-3xl" />
+          <div className="absolute inset-0 bg-gold blur-2xl md:blur-3xl rounded-2xl md:rounded-3xl" />
         </motion.div>
 
         {children}
@@ -113,7 +113,7 @@ const ScrollAnimator = ({ children, delay = 0, direction = 'up' }) => {
   );
 };
 
-// Scroll Progress Indicator - Gold Theme
+// Scroll Progress Indicator - Responsive
 const ScrollProgressIndicator = () => {
   const [progress, setProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -140,32 +140,31 @@ const ScrollProgressIndicator = () => {
         pointerEvents: isVisible ? 'auto' : 'none'
       }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed left-4 top-1/2 -translate-y-1/2 z-50 hidden lg:block"
+      className="fixed left-2 sm:left-3 md:left-4 top-1/2 -translate-y-1/2 z-50 hidden md:block"
     >
-      <div className="relative h-[200px] w-[3px] bg-white/10 rounded-full overflow-hidden">
+      <div className="relative h-[150px] sm:h-[180px] md:h-[200px] w-[2px] sm:w-[3px] bg-white/10 rounded-full overflow-hidden">
         <motion.div
           className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gold-bright via-gold to-gold-deep"
           style={{ height: `${progress}%` }}
           transition={{ duration: 0.1 }}
         />
-        <div className="absolute inset-0 flex flex-col justify-between items-center py-2">
+        <div className="absolute inset-0 flex flex-col justify-between items-center py-1 sm:py-2">
           {[0, 25, 50, 75, 100].map((value) => (
             <div
               key={value}
-              className={`w-2 h-2 rounded-full transition-all duration-300
+              className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300
                 ${progress >= value ? 'bg-gold shadow-gold' : 'bg-white/20'}`}
               style={{ 
-                transform: 'translateX(-2px)',
-                boxShadow: progress >= value ? '0 0 10px rgba(201,162,39,0.5)' : 'none'
+                transform: 'translateX(-1px)',
+                boxShadow: progress >= value ? '0 0 8px rgba(201,162,39,0.5)' : 'none'
               }}
             />
           ))}
         </div>
-        {/* Gold Glow */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-8 bg-gold/20 blur-xl rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-gold/20 blur-xl rounded-full pointer-events-none" />
       </div>
-      <div className="mt-2 text-center">
-        <span className="text-xs font-mono text-gold/60">
+      <div className="mt-1 sm:mt-2 text-center">
+        <span className="text-[10px] sm:text-xs font-mono text-gold/60">
           {Math.round(progress)}%
         </span>
       </div>
@@ -173,7 +172,7 @@ const ScrollProgressIndicator = () => {
   );
 };
 
-// Onboarding Splash Screen
+// Onboarding Splash Screen - Responsive
 const OnboardingScreen = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
 
@@ -203,8 +202,9 @@ const OnboardingScreen = ({ onComplete }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center"
+      className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center px-4"
     >
+      {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--gold)_0%,_transparent_70%)] opacity-20" />
         <div className="absolute inset-0" style={{
@@ -220,21 +220,19 @@ const OnboardingScreen = ({ onComplete }) => {
           ease: [0.22, 1, 0.36, 1],
           delay: 0.2
         }}
-        className="relative z-10 flex flex-col items-center"
+        className="relative z-10 flex flex-col items-center w-full max-w-sm"
       >
-        <div className="absolute -inset-24 bg-gold/5 blur-3xl rounded-full" />
+        <div className="absolute -inset-16 sm:-inset-20 md:-inset-24 bg-gold/5 blur-3xl rounded-full" />
         
         <div className="relative">
-          <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl  
+          <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-2xl  
             flex items-center justify-center shadow-[0_20px_60px_rgba(201,162,39,0.3)]
-            border-2 border-gold/30">
-            <span className="text-4xl md:text-5xl font-display font-bold text-black">
-              <img src={images.main} alt='celetex company' className='rounded-2xl w-full h-full object-cover'/>
-            </span>
+            border-2 border-gold/30 overflow-hidden">
+            <img src={images.main} alt='celetex company' className='w-full h-full object-cover'/>
           </div>
           
           <motion.div
-            className="absolute -inset-4 rounded-2xl border-2 border-gold/20"
+            className="absolute -inset-3 sm:-inset-4 rounded-2xl border-2 border-gold/20"
             animate={{ scale: [1, 1.05, 1], opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
@@ -244,12 +242,12 @@ const OnboardingScreen = ({ onComplete }) => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-8 text-center"
+          className="mt-6 sm:mt-8 text-center"
         >
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-white">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-white">
             Celetex <span className="text-gold">Group</span>
           </h1>
-          <p className="text-white/50 text-sm font-mono tracking-wider mt-2">
+          <p className="text-white/40 sm:text-white/50 text-xs sm:text-sm font-mono tracking-wider mt-1 sm:mt-2">
             Diverse Ventures, Unified Vision
           </p>
         </motion.div>
@@ -258,7 +256,7 @@ const OnboardingScreen = ({ onComplete }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="w-64 md:w-80 mt-10"
+          className="w-48 sm:w-56 md:w-64 lg:w-80 mt-6 sm:mt-8 md:mt-10"
         >
           <div className="relative h-1 bg-white/10 rounded-full overflow-hidden">
             <motion.div
@@ -267,7 +265,7 @@ const OnboardingScreen = ({ onComplete }) => {
               transition={{ duration: 0.1 }}
             />
           </div>
-          <div className="flex justify-between mt-2 text-xs text-white/30 font-mono">
+          <div className="flex justify-between mt-1 sm:mt-2 text-[10px] sm:text-xs text-white/30 font-mono">
             <span>Initializing</span>
             <span className="text-gold/60">{Math.round(progress)}%</span>
           </div>
@@ -277,12 +275,12 @@ const OnboardingScreen = ({ onComplete }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="flex gap-2 mt-6"
+          className="flex gap-1.5 sm:gap-2 mt-4 sm:mt-6"
         >
           {[0, 1, 2].map((i) => (
             <motion.span
               key={i}
-              className="w-2 h-2 rounded-full bg-gold/40"
+              className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gold/40"
               animate={{ 
                 scale: [1, 1.5, 1],
                 opacity: [0.3, 1, 0.3]
@@ -302,7 +300,7 @@ const OnboardingScreen = ({ onComplete }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 1 }}
-        className="absolute bottom-8 text-white/20 text-xs font-mono tracking-wider"
+        className="absolute bottom-4 sm:bottom-6 md:bottom-8 text-white/20 text-[10px] sm:text-xs font-mono tracking-wider"
       >
         v2.0.0 · EST. 2022
       </motion.div>
@@ -310,7 +308,7 @@ const OnboardingScreen = ({ onComplete }) => {
   );
 };
 
-// Back to Top Button Component
+// Back to Top Button Component - Responsive
 const BackToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -345,15 +343,15 @@ const BackToTopButton = () => {
       }}
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       onClick={scrollToTop}
-      className="fixed bottom-8 right-8 z-50 group"
+      className="fixed bottom-4 sm:bottom-6 md:bottom-8 right-4 sm:right-6 md:right-8 z-50 group"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
     >
       <div className="relative">
-        <div className="p-4 rounded-full bg-gradient-gold text-black shadow-gold 
+        <div className="p-3 sm:p-4 rounded-full bg-gradient-gold text-black shadow-gold 
           transition-all duration-300 hover:shadow-[0_8px_40px_rgba(201,162,39,0.5)]">
           <svg 
-            className="w-6 h-6 transition-transform duration-300 group-hover:-translate-y-0.5"
+            className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transition-transform duration-300 group-hover:-translate-y-0.5"
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"
@@ -363,11 +361,13 @@ const BackToTopButton = () => {
         </div>
         <span className="absolute inset-0 rounded-full bg-gold/20 animate-ping opacity-0 
           group-hover:opacity-100 transition-opacity duration-300" />
-        <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 
-          bg-black/90 text-white text-xs font-medium px-3 py-1.5 rounded-lg 
+        
+        {/* Tooltip - Hidden on mobile */}
+        <span className="absolute right-full mr-3 md:mr-4 top-1/2 -translate-y-1/2 
+          bg-black/90 text-white text-[10px] sm:text-xs font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg 
           whitespace-nowrap opacity-0 pointer-events-none transition-all duration-300 
-          group-hover:opacity-100 group-hover:mr-6
-          border border-white/10 backdrop-blur-sm">
+          group-hover:opacity-100 group-hover:mr-4 md:group-hover:mr-6
+          border border-white/10 backdrop-blur-sm hidden sm:block">
           Back to Top
         </span>
       </div>
@@ -375,7 +375,7 @@ const BackToTopButton = () => {
   );
 };
 
-// Progress Bar Component - Gold Theme
+// Progress Bar Component - Responsive
 const ProgressBar = () => {
   const [progress, setProgress] = useState(0);
 
@@ -392,15 +392,14 @@ const ProgressBar = () => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-[3px] z-[60] bg-transparent">
+    <div className="fixed top-0 left-0 right-0 h-[2px] sm:h-[3px] z-[60] bg-transparent">
       <motion.div 
         className="h-full bg-gradient-to-r from-gold-bright via-gold to-gold-deep"
         style={{ width: `${progress}%` }}
         transition={{ duration: 0.1 }}
       />
-      {/* Gold Glow */}
       <motion.div 
-        className="absolute top-0 right-0 w-20 h-full blur-md bg-gold/30"
+        className="absolute top-0 right-0 w-10 sm:w-16 md:w-20 h-full blur-md bg-gold/30"
         style={{ width: `${Math.min(progress + 10, 100)}%` }}
         transition={{ duration: 0.1 }}
       />
@@ -408,7 +407,7 @@ const ProgressBar = () => {
   );
 };
 
-// Mouse Follower Effect - Gold Theme
+// Mouse Follower Effect - Responsive (Hidden on mobile/tablet)
 const MouseFollower = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
@@ -434,10 +433,10 @@ const MouseFollower = () => {
 
   return (
     <motion.div
-      className="fixed pointer-events-none z-[9998] hidden lg:block"
+      className="fixed pointer-events-none z-[9998] hidden xl:block"
       animate={{
-        x: mousePosition.x - 20,
-        y: mousePosition.y - 20,
+        x: mousePosition.x - 16,
+        y: mousePosition.y - 16,
         scale: isHovering ? 1 : 0.5,
         opacity: isHovering ? 0.4 : 0,
       }}
@@ -448,7 +447,7 @@ const MouseFollower = () => {
         opacity: { duration: 0.2 },
       }}
     >
-      <div className="w-10 h-10 rounded-full border-2 border-gold/40 bg-gold/10 shadow-[0_0_30px_rgba(201,162,39,0.15)]" />
+      <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full border-2 border-gold/40 bg-gold/10 shadow-[0_0_30px_rgba(201,162,39,0.15)]" />
     </motion.div>
   );
 };
@@ -493,11 +492,11 @@ const App = () => {
           <StatsSection />
         </ScrollAnimator>
         
-        <ScrollAnimator direction="left" delay={0.2}>
+        <ScrollAnimator direction="up" delay={0.15}>
           <VideoSection />
         </ScrollAnimator>
         
-        <ScrollAnimator direction="right" delay={0.1}>
+        <ScrollAnimator direction="up" delay={0.1}>
           <CybermallSection />
         </ScrollAnimator>
         
@@ -505,11 +504,11 @@ const App = () => {
           <BrandsSection />
         </ScrollAnimator>
         
-        <ScrollAnimator direction="left" delay={0.15}>
+        <ScrollAnimator direction="up" delay={0.15}>
           <GallerySection />
         </ScrollAnimator>
         
-        <ScrollAnimator direction="right" delay={0.2}>
+        <ScrollAnimator direction="up" delay={0.2}>
           <FounderSection />
         </ScrollAnimator>
         
