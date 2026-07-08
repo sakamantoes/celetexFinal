@@ -8,6 +8,8 @@ import { BrandsSection } from './components/sections/BrandsSection'
 import { GallerySection } from './components/sections/GallerySection'
 import { FounderSection } from './components/sections/FounderSection'
 import { ProcessSection } from './components/sections/ProcessSection'
+import { CTABanner } from './components/sections/CTABanner'
+import { Footer } from './components/sections/Footer'
 
 const App = () => {
   return (
@@ -21,6 +23,8 @@ const App = () => {
     <GallerySection />
     <FounderSection />
     <ProcessSection />
+    <CTABanner />
+    <Footer />
    </>
   )
 }
