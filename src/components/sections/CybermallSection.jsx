@@ -63,7 +63,7 @@ const features = [
 export function CybermallSection() {
   return (
     <motion.section
-      className="max-w-[1360px] mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-24"
+      className="max-w-[1360px] mx-auto px-3 md:px-12 lg:px-16 py-16 md:py-24"
       id="cybermall-app"
       initial="hidden"
       whileInView="visible"
