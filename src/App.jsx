@@ -62,7 +62,6 @@ function useReveal(threshold = 0.2) {
 
 function useScrollState() {
   const [y, setY] = useState(0);
-  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     let ticking = false;
@@ -72,9 +71,7 @@ function useScrollState() {
       requestAnimationFrame(() => {
         const h = document.documentElement;
         const scrollTop = h.scrollTop || document.body.scrollTop;
-        const scrollHeight = h.scrollHeight - h.clientHeight;
         setY(scrollTop);
-        setProgress(scrollHeight > 0 ? scrollTop / scrollHeight : 0);
         ticking = false;
       });
     };
@@ -84,7 +81,7 @@ function useScrollState() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  return { y, progress, scrolled: y > 24 };
+  return { y, scrolled: y > 24 };
 }
 
 function usePointerFine() {
@@ -1160,7 +1157,7 @@ function ProcessLine() {
 ---------------------------------------------------------------------- */
 
 export default function App() {
-  const { progress, scrolled } = useScrollState();
+  const { scrolled } = useScrollState();
   const pointerFine = usePointerFine();
 
   const tiltA = useTilt(8, pointerFine);
@@ -1204,12 +1201,6 @@ export default function App() {
         .mono{ font-family:'IBM Plex Mono', monospace; }
         a{ color:inherit; text-decoration:none; }
         button{ font-family:inherit; cursor:pointer; }
-
-        .progress-thread{
-          position:fixed; top:0; left:0; width:3px; height:100vh; z-index:60;
-          background:linear-gradient(180deg, var(--gold-bright), var(--gold) 40%, transparent 100%);
-          transform-origin:top; pointer-events:none; transition: transform 0.1s linear;
-        }
 
         .reveal{ opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
         .reveal-visible{ opacity:1; transform:translateY(0); }
@@ -1392,8 +1383,6 @@ export default function App() {
           .hero-line-draw, .hero-ring-draw, .stat-card, .gallery-art-svg{ transition:none !important; animation:none !important; opacity: 1 !important; transform: none !important; }
         }
       `}</style>
-
-      <div className="progress-thread" style={{ transform: `scaleY(${progress})` }} />
 
       <NavBar scrolled={scrolled} />
 
