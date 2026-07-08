@@ -19,7 +19,7 @@ export function StatsSection() {
             Founded on 9th March 2022 by Rtr. Onyekachi Uchechukwu Celestine,
             a visionary entrepreneur committed to innovation, excellence, and
             sustainable business growth.
-            <a href="#contact" className="inline-flex items-center gap-2 ml-3 text-xs font-semibold 
+            <a href="#contact" className="inline-flex items-center gap-2 mt-3 text-xs font-semibold 
               border border-white/15 text-white px-4 py-1.5 rounded-full transition-all duration-300 
               hover:border-gold hover:text-gold-bright">
               RC: 9341015
