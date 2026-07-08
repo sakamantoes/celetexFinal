@@ -1,6 +1,6 @@
 // components/sections/CybermallSection.jsx
-import React from "react";
-import { motion } from "framer-motion";
+import React from 'react';
+import { motion } from 'framer-motion';
 import {
   Smartphone,
   Download,
@@ -9,109 +9,162 @@ import {
   CreditCard,
   Truck,
   Package,
-} from "lucide-react";
-import images from "../../assets/image";
+} from 'lucide-react';
+import images from '../../assets/image';
 
-/*
-  WHY THIS VERSION IS FLICKER-SAFE ON ANDROID:
-  - Only ONE element (the section wrapper) animates on scroll-in.
-    Previously the badge, heading, each feature row, AND the mockup
-    panel all had their own whileInView/opacity+translate transition
-    running at slightly different delays — each one forces its own
-    GPU compositing layer. Several layers compositing at once is what
-    reads as a flicker on weaker Android GPUs.
-  - The mockup image has exactly one hover effect (a subtle lift),
-    no separate radial-gradient glow layer sitting on top of it.
-  - No arbitrary/inset blur or gradient overlays — those force the
-    browser to repaint a full-bleed layer on every frame of a
-    transition instead of a simple compositor-only transform.
-  - Feature rows are static (no per-item entrance animation) since a
-    5-item staggered reveal rarely adds enough to justify the extra
-    repaint cost.
-*/
-
-const container = {
-  hidden: { opacity: 0, y: 24 },
-  show: {
+const containerVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.2, 0.7, 0.2, 1] },
+    transition: {
+      duration: 0.7,
+      ease: [0.2, 0.7, 0.2, 1],
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: 'easeOut' },
+  },
+};
+
+const featureVariants = {
+  hidden: { opacity: 0, x: -15 },
+  visible: (i) => ({
+    opacity: 1,
+    x: 0,
+    transition: { delay: i * 0.08, duration: 0.4, ease: 'easeOut' },
+  }),
+};
+
+const mockupVariants = {
+  hidden: { opacity: 0, scale: 0.9, rotateY: -10 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    rotateY: 0,
+    transition: { duration: 0.8, delay: 0.3, ease: [0.22, 0.61, 0.36, 1] },
   },
 };
 
 const features = [
-  { icon: ShoppingCart, label: "Easy Shopping" },
-  { icon: CreditCard, label: "Secure Payments" },
-  { icon: Truck, label: "Fast Delivery" },
-  { icon: Package, label: "Tracking Logistics" },
+  { icon: ShoppingCart, label: 'Easy Shopping' },
+  { icon: CreditCard, label: 'Secure Payments' },
+  { icon: Truck, label: 'Fast Delivery' },
+  { icon: Package, label: 'Tracking Logistics' },
 ];
 
 export function CybermallSection() {
   return (
-    <section
+    <motion.section
       className="max-w-[1360px] mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-24"
       id="cybermall-app"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={containerVariants}
     >
-      <motion.div
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
-        className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center border border-white/10 rounded-2xl p-8 md:p-12 lg:p-16"
-      >
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center border border-white/10 rounded-2xl p-8 md:p-12 lg:p-16 bg-gradient-to-br from-charcoal to-black">
         {/* TEXT */}
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/15 rounded-full text-white/70 text-xs font-medium tracking-wide uppercase font-mono mb-6">
+          <motion.div
+            className="inline-flex items-center gap-2 px-3 py-1 border border-white/15 rounded-full text-white/70 text-xs font-medium tracking-wide uppercase font-mono mb-6"
+            variants={itemVariants}
+            whileHover={{ borderColor: '#C9A227', scale: 1.02 }}
+          >
             <Smartphone size={14} />
             <span>Coming Soon</span>
-          </div>
+          </motion.div>
 
-          <h2 className="font-display text-3xl md:text-4xl font-bold leading-[1.15] tracking-tight text-white mb-4">
+          <motion.h2
+            className="font-display text-3xl md:text-4xl font-bold leading-[1.15] tracking-tight text-white mb-4"
+            variants={itemVariants}
+          >
             Cybermall App
-          </h2>
+          </motion.h2>
 
-          <p className="text-[15px] leading-relaxed text-white/55 mb-8 max-w-[440px]">
+          <motion.p
+            className="text-[15px] leading-relaxed text-white/55 mb-8 max-w-[440px]"
+            variants={itemVariants}
+          >
             Shop, pay, and track deliveries from one place. Cybermall brings the
             marketplace to your pocket — simple, secure, and built for everyday use.
-          </p>
+          </motion.p>
 
-          <ul className="grid grid-cols-2 gap-y-4 gap-x-6 mb-10">
-            {features.map((feature) => (
-              <li key={feature.label} className="flex items-center gap-2.5 text-sm text-white/80">
-                <feature.icon size={16} className="text-[#C9A227] flex-shrink-0" />
+          <div className="grid grid-cols-2 gap-y-4 gap-x-6 mb-10">
+            {features.map((feature, i) => (
+              <motion.li
+                key={feature.label}
+                custom={i}
+                variants={featureVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="flex items-center gap-2.5 text-sm text-white/80 list-none"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <feature.icon size={16} className="text-[#C9A227] flex-shrink-0" />
+                </motion.div>
                 {feature.label}
-              </li>
+              </motion.li>
             ))}
-          </ul>
+          </div>
 
-          <div className="flex flex-wrap gap-3">
-            <a
+          <motion.div className="flex flex-wrap gap-3" variants={itemVariants}>
+            <motion.a
               href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full font-semibold text-sm transition-colors duration-200 hover:bg-white/90"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full font-semibold text-sm"
+              whileHover={{ scale: 1.05, boxShadow: '0 8px 30px rgba(255,255,255,0.2)' }}
+              whileTap={{ scale: 0.95 }}
             >
               <Download size={16} />
               Get Notified
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3 text-white border border-white/15 rounded-full font-semibold text-sm transition-colors duration-200 hover:border-white/40"
+              className="inline-flex items-center gap-2 px-6 py-3 text-white border border-white/15 rounded-full font-semibold text-sm"
+              whileHover={{ scale: 1.05, borderColor: 'rgba(255,255,255,0.4)' }}
+              whileTap={{ scale: 0.95 }}
             >
               Learn More
-              <ArrowRight size={15} />
-            </a>
-          </div>
+              <motion.span
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <ArrowRight size={15} />
+              </motion.span>
+            </motion.a>
+          </motion.div>
         </div>
 
-        {/* MOCKUP — single hover transform, no extra glow layer */}
-        <div className="flex justify-center">
-          <img
+        {/* MOCKUP */}
+        <motion.div
+          className="flex justify-center"
+          variants={mockupVariants}
+        >
+          <motion.img
             src={images.mockup}
             alt="Cybermall App Mockup"
             loading="lazy"
-            className="w-full max-w-[420px] rounded-xl border border-white/10 shadow-xl transition-transform duration-300 will-change-transform hover:-translate-y-1"
+            className="w-full max-w-[420px] rounded-xl border border-white/10 shadow-xl"
+            whileHover={{
+              y: -8,
+              scale: 1.02,
+              boxShadow: '0 30px 80px rgba(0,0,0,0.5)',
+              transition: { duration: 0.3, ease: 'easeOut' },
+            }}
           />
-        </div>
-      </motion.div>
-    </section>
+        </motion.div>
+      </div>
+    </motion.section>
   );
 }
