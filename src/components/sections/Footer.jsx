@@ -52,7 +52,6 @@ export function Footer() {
 
         <div className="flex flex-col sm:flex-row justify-between items-center border-t border-white/6 pt-7 text-[12.5px]">
           <span>© 2026 Celetex Group of Company Limited. All rights reserved.</span>
-          <span className="font-mono">Black · Gold · White</span>
         </div>
       </div>
     </footer>
