@@ -66,7 +66,7 @@ const statItem = {
 
 export function FounderSection() {
   return (
-    <section className="max-w-[1360px] mx-auto px-6 md:px-12 lg:px-16 py-20 md:py-24">
+    <section className="max-w-[1360px] mx-auto px-3 md:px-12 lg:px-16 py-20 md:py-24">
       <div className="bg-charcoal rounded-3xl overflow-hidden border border-white/6 shadow-2xl">
         {/* Header */}
         <motion.div 
