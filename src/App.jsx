@@ -7,6 +7,7 @@ import { CybermallSection } from './components/sections/CybermallSection'
 import { BrandsSection } from './components/sections/BrandsSection'
 import { GallerySection } from './components/sections/GallerySection'
 import { FounderSection } from './components/sections/FounderSection'
+import { ProcessSection } from './components/sections/ProcessSection'
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
     <BrandsSection />
     <GallerySection />
     <FounderSection />
+    <ProcessSection />
    </>
   )
 }
