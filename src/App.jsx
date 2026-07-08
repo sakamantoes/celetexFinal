@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { NavBar } from './components/navigation/NavBar';
 import { HeroSection } from './components/hero/HeroSection';
 import { StatsSection } from './components/sections/StatsSection';
@@ -12,165 +12,6 @@ import { ProcessSection } from './components/sections/ProcessSection';
 import { CTABanner } from './components/sections/CTABanner';
 import { Footer } from './components/sections/Footer';
 import images from './assets/image';
-
-// Scroll Animator Component - Gold Theme (Responsive)
-const ScrollAnimator = ({ children, delay = 0, direction = 'up' }) => {
-  const [ref, setRef] = useState(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    if (!ref) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(ref);
-        }
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -30px 0px',
-      }
-    );
-
-    observer.observe(ref);
-    return () => observer.disconnect();
-  }, [ref]);
-
-  const directionMap = {
-    up: { y: 40, x: 0 },
-    down: { y: -40, x: 0 },
-    left: { y: 0, x: 40 },
-    right: { y: 0, x: -40 },
-  };
-
-  const { y, x } = directionMap[direction] || directionMap.up;
-
-  return (
-    <motion.div
-      ref={setRef}
-      initial={{ opacity: 0, y, x }}
-      animate={isVisible ? { 
-        opacity: 1, 
-        y: 0, 
-        x: 0,
-        transition: {
-          duration: 0.7,
-          ease: [0.22, 1, 0.36, 1],
-          delay: delay,
-        }
-      } : { 
-        opacity: 0, 
-        y, 
-        x 
-      }}
-    >
-      {/* Gold Reveal Line - Responsive */}
-      <motion.div
-        className="relative"
-        initial={{ opacity: 0 }}
-        animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.6, delay: delay + 0.2 }}
-      >
-        {/* Left Gold Line - Desktop only */}
-        <div className="absolute -left-6 md:-left-8 top-0 bottom-0 w-[2px] bg-gradient-to-b from-gold/0 via-gold to-gold/0 hidden lg:block">
-          <motion.div
-            className="absolute top-0 left-0 right-0 h-0 bg-gold"
-            animate={isVisible ? { height: '100%' } : { height: '0%' }}
-            transition={{ duration: 0.8, delay: delay + 0.3, ease: [0.22, 1, 0.36, 1] }}
-          />
-        </div>
-        
-        {/* Top Gold Line - Mobile/Tablet */}
-        <div className="absolute -top-6 left-0 right-0 h-[2px] bg-gradient-to-r from-gold/0 via-gold to-gold/0 block lg:hidden">
-          <motion.div
-            className="absolute top-0 left-0 right-0 h-full bg-gold"
-            animate={isVisible ? { width: '100%' } : { width: '0%' }}
-            transition={{ duration: 0.8, delay: delay + 0.3, ease: [0.22, 1, 0.36, 1] }}
-          />
-        </div>
-        
-        {/* Gold Glow Effect - Responsive */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none -z-10"
-          initial={{ opacity: 0 }}
-          animate={isVisible ? {
-            opacity: 0.03,
-            scale: 1,
-          } : {
-            opacity: 0,
-            scale: 0.9,
-          }}
-          transition={{ duration: 0.8, delay: delay + 0.1 }}
-        >
-          <div className="absolute inset-0 bg-gold blur-2xl md:blur-3xl rounded-2xl md:rounded-3xl" />
-        </motion.div>
-
-        {children}
-      </motion.div>
-    </motion.div>
-  );
-};
-
-// Scroll Progress Indicator - Responsive
-const ScrollProgressIndicator = () => {
-  const [progress, setProgress] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const updateProgress = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const newProgress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      setProgress(newProgress);
-      setIsVisible(scrollTop > 100);
-    };
-
-    window.addEventListener('scroll', updateProgress, { passive: true });
-    return () => window.removeEventListener('scroll', updateProgress);
-  }, []);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ 
-        opacity: isVisible ? 1 : 0,
-        x: isVisible ? 0 : 20,
-        pointerEvents: isVisible ? 'auto' : 'none'
-      }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed left-2 sm:left-3 md:left-4 top-1/2 -translate-y-1/2 z-50 hidden md:block"
-    >
-      <div className="relative h-[150px] sm:h-[180px] md:h-[200px] w-[2px] sm:w-[3px] bg-white/10 rounded-full overflow-hidden">
-        <motion.div
-          className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gold-bright via-gold to-gold-deep"
-          style={{ height: `${progress}%` }}
-          transition={{ duration: 0.1 }}
-        />
-        <div className="absolute inset-0 flex flex-col justify-between items-center py-1 sm:py-2">
-          {[0, 25, 50, 75, 100].map((value) => (
-            <div
-              key={value}
-              className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300
-                ${progress >= value ? 'bg-gold shadow-gold' : 'bg-white/20'}`}
-              style={{ 
-                transform: 'translateX(-1px)',
-                boxShadow: progress >= value ? '0 0 8px rgba(201,162,39,0.5)' : 'none'
-              }}
-            />
-          ))}
-        </div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-gold/20 blur-xl rounded-full pointer-events-none" />
-      </div>
-      <div className="mt-1 sm:mt-2 text-center">
-        <span className="text-[10px] sm:text-xs font-mono text-gold/60">
-          {Math.round(progress)}%
-        </span>
-      </div>
-    </motion.div>
-  );
-};
 
 // Onboarding Splash Screen - Responsive
 const OnboardingScreen = ({ onComplete }) => {
@@ -452,6 +293,65 @@ const MouseFollower = () => {
   );
 };
 
+// Scroll Progress Indicator - Responsive (Side indicator)
+const ScrollProgressIndicator = () => {
+  const [progress, setProgress] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const updateProgress = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const newProgress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      setProgress(newProgress);
+      setIsVisible(scrollTop > 100);
+    };
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    return () => window.removeEventListener('scroll', updateProgress);
+  }, []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ 
+        opacity: isVisible ? 1 : 0,
+        x: isVisible ? 0 : 20,
+        pointerEvents: isVisible ? 'auto' : 'none'
+      }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed left-2 sm:left-3 md:left-4 top-1/2 -translate-y-1/2 z-50 hidden md:block"
+    >
+      <div className="relative h-[150px] sm:h-[180px] md:h-[200px] w-[2px] sm:w-[3px] bg-white/10 rounded-full overflow-hidden">
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gold-bright via-gold to-gold-deep"
+          style={{ height: `${progress}%` }}
+          transition={{ duration: 0.1 }}
+        />
+        <div className="absolute inset-0 flex flex-col justify-between items-center py-1 sm:py-2">
+          {[0, 25, 50, 75, 100].map((value) => (
+            <div
+              key={value}
+              className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300
+                ${progress >= value ? 'bg-gold shadow-gold' : 'bg-white/20'}`}
+              style={{ 
+                transform: 'translateX(-1px)',
+                boxShadow: progress >= value ? '0 0 8px rgba(201,162,39,0.5)' : 'none'
+              }}
+            />
+          ))}
+        </div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-gold/20 blur-xl rounded-full pointer-events-none" />
+      </div>
+      <div className="mt-1 sm:mt-2 text-center">
+        <span className="text-[10px] sm:text-xs font-mono text-gold/60">
+          {Math.round(progress)}%
+        </span>
+      </div>
+    </motion.div>
+  );
+};
+
 // Main App Component
 const App = () => {
   const [showOnboarding, setShowOnboarding] = useState(true);
@@ -483,46 +383,17 @@ const App = () => {
         <ScrollProgressIndicator />
         <NavBar />
         
-        {/* Each section wrapped with ScrollAnimator with gold theme */}
-        <ScrollAnimator direction="up">
-          <HeroSection />
-        </ScrollAnimator>
-        
-        <ScrollAnimator direction="up" delay={0.1}>
-          <StatsSection />
-        </ScrollAnimator>
-        
-        <ScrollAnimator direction="up" delay={0.15}>
-          <VideoSection />
-        </ScrollAnimator>
-        
-        <ScrollAnimator direction="up" delay={0.1}>
-          <CybermallSection />
-        </ScrollAnimator>
-        
-        <ScrollAnimator direction="up" delay={0.2}>
-          <BrandsSection />
-        </ScrollAnimator>
-        
-        <ScrollAnimator direction="up" delay={0.15}>
-          <GallerySection />
-        </ScrollAnimator>
-        
-        <ScrollAnimator direction="up" delay={0.2}>
-          <FounderSection />
-        </ScrollAnimator>
-        
-        <ScrollAnimator direction="up" delay={0.1}>
-          <ProcessSection />
-        </ScrollAnimator>
-        
-        <ScrollAnimator direction="up" delay={0.15}>
-          <CTABanner />
-        </ScrollAnimator>
-        
-        <ScrollAnimator direction="up" delay={0.2}>
-          <Footer />
-        </ScrollAnimator>
+        {/* All sections - no scroll animations */}
+        <HeroSection />
+        <StatsSection />
+        <VideoSection />
+        <CybermallSection />
+        <BrandsSection />
+        <GallerySection />
+        <FounderSection />
+        <ProcessSection />
+        <CTABanner />
+        <Footer />
         
         <BackToTopButton />
       </motion.div>
