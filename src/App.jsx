@@ -5,6 +5,7 @@ import { StatsSection } from './components/sections/StatsSection'
 import { VideoSection } from './components/sections/VideoSection'
 import { CybermallSection } from './components/sections/CybermallSection'
 import { BrandsSection } from './components/sections/BrandsSection'
+import { GallerySection } from './components/sections/GallerySection'
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
     <VideoSection />
     <CybermallSection />
     <BrandsSection />
+    <GallerySection />
    </>
   )
 }
