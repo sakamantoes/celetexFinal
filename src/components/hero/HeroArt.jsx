@@ -1,9 +1,17 @@
 // components/hero/HeroArt.jsx
 import React from 'react';
+import { motion } from 'framer-motion';
 
 export function HeroArtPrimary() {
   return (
-    <svg viewBox="0 0 520 620" className="w-full h-full" aria-hidden="true">
+    <motion.svg 
+      viewBox="0 0 520 620" 
+      className="w-full h-full" 
+      aria-hidden="true"
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
+    >
       <defs>
         <linearGradient id="gGoldA" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#C9A227" />
@@ -45,28 +53,48 @@ export function HeroArtPrimary() {
         <line x1="300" y1="130" x2="300" y2="175" />
         <circle cx="150" cy="120" r="4" fill="url(#gGoldA)" />
       </g>
-      <polyline
+      <motion.polyline
         points="40,560 110,520 175,540 235,470 300,495 365,410 430,440 470,360"
         fill="none"
         stroke="#C9A227"
         strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="hero-line-draw"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: 1, opacity: 1 }}
+        transition={{ duration: 2.4, delay: 0.4, ease: "easeInOut" }}
       />
       {[
         [40, 560], [110, 520], [175, 540], [235, 470],
         [300, 495], [365, 410], [430, 440], [470, 360],
       ].map(([cx, cy], i) => (
-        <circle key={i} cx={cx} cy={cy} r="4" fill="#0a0a0a" stroke="#C9A227" strokeWidth="2" />
+        <motion.circle 
+          key={i} 
+          cx={cx} 
+          cy={cy} 
+          r="4" 
+          fill="#0a0a0a" 
+          stroke="#C9A227" 
+          strokeWidth="2"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.8 + i * 0.1 }}
+        />
       ))}
-    </svg>
+    </motion.svg>
   );
 }
 
 export function HeroArtSecondary() {
   return (
-    <svg viewBox="0 0 360 300" className="w-full h-full" aria-hidden="true">
+    <motion.svg 
+      viewBox="0 0 360 300" 
+      className="w-full h-full" 
+      aria-hidden="true"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 0.61, 0.36, 1] }}
+    >
       <defs>
         <linearGradient id="gGoldB" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#C9A227" />
@@ -75,9 +103,12 @@ export function HeroArtSecondary() {
       </defs>
       <rect x="0" y="0" width="360" height="300" rx="16" fill="#1a1a1a" />
       <circle cx="120" cy="130" r="46" fill="none" stroke="url(#gGoldB)" strokeWidth="2" />
-      <circle
+      <motion.circle
         cx="120" cy="130" r="46" fill="none" stroke="url(#gGoldB)" strokeWidth="2"
-        strokeDasharray="290" strokeDashoffset="70" className="hero-ring-draw"
+        strokeDasharray="290" strokeDashoffset="70"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+        style={{ transformOrigin: '120px 130px' }}
       />
       <circle cx="120" cy="130" r="18" fill="#0a0a0a" stroke="url(#gGoldB)" strokeWidth="1.5" />
       <g stroke="url(#gGoldB)" strokeWidth="1.6" fill="none">
@@ -85,15 +116,47 @@ export function HeroArtSecondary() {
         <line x1="166" y1="130" x2="230" y2="170" />
         <line x1="166" y1="112" x2="230" y2="60" />
       </g>
-      <circle cx="230" cy="90" r="6" fill="#C9A227" />
-      <circle cx="230" cy="170" r="6" fill="#C9A227" />
-      <circle cx="230" cy="60" r="6" fill="#C9A227" />
-      <text x="30" y="250" fill="rgba(255,255,255,0.7)" fontFamily="IBM Plex Mono, monospace" fontSize="11" letterSpacing="2">
+      <motion.circle 
+        cx="230" cy="90" r="6" fill="#C9A227"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.4, delay: 0.6 }}
+      />
+      <motion.circle 
+        cx="230" cy="170" r="6" fill="#C9A227"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.4, delay: 0.7 }}
+      />
+      <motion.circle 
+        cx="230" cy="60" r="6" fill="#C9A227"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.4, delay: 0.8 }}
+      />
+      <motion.text 
+        x="30" y="250" 
+        fill="rgba(255,255,255,0.7)" 
+        fontFamily="IBM Plex Mono, monospace" 
+        fontSize="11" 
+        letterSpacing="2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.9 }}
+      >
         CELETEX / EST. 2022
-      </text>
-      <text x="30" y="268" fill="rgba(255,255,255,0.3)" fontFamily="IBM Plex Mono, monospace" fontSize="11">
+      </motion.text>
+      <motion.text 
+        x="30" y="268" 
+        fill="rgba(255,255,255,0.3)" 
+        fontFamily="IBM Plex Mono, monospace" 
+        fontSize="11"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 1.0 }}
+      >
         DIVERSE VENTURES, UNIFIED VISION
-      </text>
-    </svg>
+      </motion.text>
+    </motion.svg>
   );
 }
