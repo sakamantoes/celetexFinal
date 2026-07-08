@@ -1,1 +1,358 @@
 @import "tailwindcss";
+
+/* index.css - Tailwind CSS with custom theme */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --gold: #C9A227;
+    --gold-bright: #F3D27A;
+    --gold-deep: #8C6A22;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0a0a0a;
+    color: #faf9f6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, .font-display {
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  .font-mono {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+}
+
+@layer components {
+  .bg-gradient-gold {
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  }
+
+  .bg-gradient-gold-deep {
+    background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  }
+
+  .text-gold {
+    color: var(--gold);
+  }
+
+  .text-gold-bright {
+    color: var(--gold-bright);
+  }
+
+  .border-gold {
+    border-color: var(--gold);
+  }
+
+  .border-gold\/15 {
+    border-color: rgba(201, 162, 39, 0.15);
+  }
+
+  .border-gold\/20 {
+    border-color: rgba(201, 162, 39, 0.2);
+  }
+
+  .border-gold\/25 {
+    border-color: rgba(201, 162, 39, 0.25);
+  }
+
+  .border-gold\/30 {
+    border-color: rgba(201, 162, 39, 0.3);
+  }
+
+  .bg-gold\/8 {
+    background-color: rgba(201, 162, 39, 0.08);
+  }
+
+  .bg-gold\/10 {
+    background-color: rgba(201, 162, 39, 0.10);
+  }
+
+  .bg-gold\/12 {
+    background-color: rgba(201, 162, 39, 0.12);
+  }
+
+  .bg-gold\/15 {
+    background-color: rgba(201, 162, 39, 0.15);
+  }
+
+  .bg-gold\/50 {
+    background-color: rgba(201, 162, 39, 0.50);
+  }
+
+  .shadow-gold {
+    box-shadow: 0 8px 30px rgba(201, 162, 39, 0.35);
+  }
+
+  .shadow-gold\/25 {
+    box-shadow: 0 8px 24px rgba(201, 162, 39, 0.25);
+  }
+
+  .shadow-gold\/10 {
+    box-shadow: 0 4px 12px rgba(201, 162, 39, 0.10);
+  }
+
+  .shadow-gold\/30 {
+    box-shadow: 0 8px 30px rgba(201, 162, 39, 0.30);
+  }
+
+  .bg-charcoal {
+    background-color: #1a1a1a;
+  }
+
+  .border-white\/6 {
+    border-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .border-white\/10 {
+    border-color: rgba(255, 255, 255, 0.10);
+  }
+
+  .border-white\/15 {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .border-white\/20 {
+    border-color: rgba(255, 255, 255, 0.20);
+  }
+
+  .bg-white\/2 {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+
+  .bg-white\/4 {
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+
+  .bg-white\/6 {
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .text-white\/30 {
+    color: rgba(255, 255, 255, 0.30);
+  }
+
+  .text-white\/40 {
+    color: rgba(255, 255, 255, 0.40);
+  }
+
+  .text-white\/50 {
+    color: rgba(255, 255, 255, 0.50);
+  }
+
+  .text-white\/55 {
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .text-white\/60 {
+    color: rgba(255, 255, 255, 0.60);
+  }
+
+  .text-white\/65 {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .text-white\/70 {
+    color: rgba(255, 255, 255, 0.70);
+  }
+}
+
+@layer utilities {
+  .transition-250 {
+    transition-duration: 250ms;
+  }
+
+  .transition-300 {
+    transition-duration: 300ms;
+  }
+
+  .transition-400 {
+    transition-duration: 400ms;
+  }
+
+  .transition-500 {
+    transition-duration: 500ms;
+  }
+
+  .transition-600 {
+    transition-duration: 600ms;
+  }
+
+  .transition-700 {
+    transition-duration: 700ms;
+  }
+
+  .transition-800 {
+    transition-duration: 800ms;
+  }
+
+  .transition-1400 {
+    transition-duration: 1400ms;
+  }
+
+  .delay-200 {
+    transition-delay: 200ms;
+  }
+
+  .delay-400 {
+    transition-delay: 400ms;
+  }
+
+  .delay-600 {
+    transition-delay: 600ms;
+  }
+
+  .delay-700 {
+    transition-delay: 700ms;
+  }
+
+  .translate-x-7\.5 {
+    transform: translateX(30px);
+  }
+
+  .-translate-x-7\.5 {
+    transform: translateX(-30px);
+  }
+
+  .-translate-x-10 {
+    transform: translateX(-40px);
+  }
+
+  .translate-x-10 {
+    transform: translateX(40px);
+  }
+
+  .scale-85 {
+    transform: scale(0.85);
+  }
+
+  .scale-92 {
+    transform: scale(0.92);
+  }
+
+  .scale-94 {
+    transform: scale(0.94);
+  }
+
+  .scale-95 {
+    transform: scale(0.95);
+  }
+
+  .scale-108 {
+    transform: scale(1.08);
+  }
+
+  .gap-4\.5 {
+    gap: 18px;
+  }
+
+  .gap-15 {
+    gap: 60px;
+  }
+
+  .p-5\.5 {
+    padding: 22px;
+  }
+
+  .p-4\.5 {
+    padding: 18px;
+  }
+
+  .px-4\.5 {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .py-1\.5 {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .py-2\.5 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .py-3\.5 {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .py-4\.5 {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .top-11 {
+    top: 44px;
+  }
+
+  .right-25 {
+    right: 100px;
+  }
+
+  .-right-25 {
+    right: -100px;
+  }
+
+  .-top-40 {
+    top: -160px;
+  }
+
+  /* Animation keyframes */
+  @keyframes drawLine {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes ringSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  .hero-line-draw {
+    stroke-dasharray: 900;
+    stroke-dashoffset: 900;
+    animation: drawLine 2.4s ease forwards 0.4s;
+  }
+
+  .hero-ring-draw {
+    animation: ringSpin 6s linear infinite;
+    transform-origin: 120px 130px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  
+  .hero-line-draw {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+  
+  .hero-ring-draw {
+    animation: none;
+  }
+}
