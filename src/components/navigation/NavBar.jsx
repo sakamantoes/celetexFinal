@@ -102,7 +102,7 @@ export function NavBar({ scrolled }) {
         initial="hidden"
         animate="visible"
         variants={navVariants}
-        className={`top-0 z-50 flex items-center justify-between px-6 md:px-12 lg:px-16 
+        className={`top-0 z-50 flex items-center justify-between px-2 md:px-12 lg:px-16 
           transition-all duration-400 border-b border-transparent relative
           ${scrolled ? 'bg-[rgba(8,8,8,0.98)] border-white/6 py-3.5' : 'bg-transparent py-5'}`}
         role="navigation" 
@@ -115,7 +115,7 @@ export function NavBar({ scrolled }) {
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
           >
             <motion.span 
-              className="inline-block w-[200px] h-[150px]  rounded-2xl overflow-hidden"
+              className="inline-block w-[160px] h-[150px] rounded-2xl overflow-hidden"
               whileHover={{ scale: 1.05, rotate: -3 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
