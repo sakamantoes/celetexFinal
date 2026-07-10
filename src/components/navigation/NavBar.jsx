@@ -115,11 +115,11 @@ export function NavBar({ scrolled }) {
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
           >
             <motion.span 
-              className="inline-block w-[150px] h-[100px] bg-white rounded-2xl overflow-hidden"
+              className="inline-block w-[200px] h-[150px]  rounded-2xl overflow-hidden"
               whileHover={{ scale: 1.05, rotate: -3 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
-              <img src={images.main} alt="Celetex Group Logo" className="w-full h-full object-contain" />
+              <img src={images.main1} alt="Celetex Group Logo" className="w-full h-full object-contain" />
             </motion.span>
           </motion.div>
 

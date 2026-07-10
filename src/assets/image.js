@@ -10,6 +10,7 @@ import video from '../assets/video.mp4'
 import mockup from '../assets/mockup.jpg'
 import newLog from '../assets/newLog.jpg'
 import main from '../assets/main.jpg'
+import main1 from '../assets/main1.png'
 
 const images = {
    Logo: logo,
@@ -23,7 +24,8 @@ const images = {
    mockup,
    logo01Png: logo01,
    newLog,
-   main
+   main,
+   main1
 }
 
 export default images
