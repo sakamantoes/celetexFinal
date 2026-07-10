@@ -1,5 +1,19 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  Home, 
+  Sparkles, 
+  BarChart3, 
+  Film, 
+  ShoppingBag, 
+  Tags, 
+  Image, 
+  User, 
+  Settings, 
+  Rocket, 
+  FileText,
+  ChevronUp
+} from 'lucide-react';
 import { NavBar } from './components/navigation/NavBar';
 import { HeroSection } from './components/hero/HeroSection';
 import { StatsSection } from './components/sections/StatsSection';
@@ -45,7 +59,6 @@ const OnboardingScreen = ({ onComplete }) => {
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center px-4"
     >
-      {/* Single lightweight background accent instead of stacked blurred gradients */}
       <div
         className="absolute inset-0 opacity-20 pointer-events-none"
         style={{
@@ -74,8 +87,6 @@ const OnboardingScreen = ({ onComplete }) => {
               decoding="async"
             />
           </div>
-
-          {/* One static ring instead of an infinitely animating scale/opacity loop */}
           <div className="absolute -inset-3 sm:-inset-4 rounded-2xl border-2 border-gold/20" />
         </div>
 
@@ -111,7 +122,6 @@ const OnboardingScreen = ({ onComplete }) => {
           </div>
         </motion.div>
 
-        {/* Static dots instead of 3 concurrent infinite keyframe loops */}
         <div className="flex gap-1.5 sm:gap-2 mt-4 sm:mt-6 opacity-70">
           {[0, 1, 2].map((i) => (
             <span
@@ -166,20 +176,15 @@ const BackToTopButton = () => {
           className="p-3 sm:p-4 rounded-full bg-gradient-gold text-black shadow-gold
           transition-all duration-300 hover:shadow-[0_8px_40px_rgba(201,162,39,0.5)]"
         >
-          <svg
+          <ChevronUp
             className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transition-transform duration-300 group-hover:-translate-y-0.5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-          </svg>
+            strokeWidth={2.5}
+          />
         </div>
         <span
           className="absolute inset-0 rounded-full bg-gold/20 animate-ping opacity-0
           group-hover:opacity-100 transition-opacity duration-300"
         />
-
         <span
           className="absolute right-full mr-3 md:mr-4 top-1/2 -translate-y-1/2
           bg-black/90 text-white text-[10px] sm:text-xs font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg
@@ -194,7 +199,7 @@ const BackToTopButton = () => {
   );
 };
 
-// Progress Bar Component - rAF-throttled, no per-scroll re-render churn beyond one frame
+// Progress Bar Component - rAF-throttled
 const ProgressBar = () => {
   const [progress, setProgress] = useState(0);
   const ticking = useRef(false);
@@ -232,8 +237,7 @@ const ProgressBar = () => {
   );
 };
 
-// Mouse Follower Effect - only mounts its listener on pointer-fine (mouse) devices,
-// and throttles state updates to one per animation frame so it never blocks touch input.
+// Mouse Follower Effect
 const MouseFollower = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
@@ -241,7 +245,6 @@ const MouseFollower = () => {
   const latestPos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    // Bail out entirely on touch/coarse-pointer devices - no listeners, no work.
     if (!window.matchMedia || !window.matchMedia('(pointer: fine)').matches) {
       return;
     }
@@ -294,66 +297,120 @@ const MouseFollower = () => {
   );
 };
 
-// Scroll Progress Indicator - rAF-throttled, desktop only (md:block already gates render,
-// but we also gate the listener registration itself)
+// Scroll Progress Indicator - Shows section names and icons from Lucide React
 const ScrollProgressIndicator = () => {
-  const [progress, setProgress] = useState(0);
+  const [activeSection, setActiveSection] = useState('Home');
   const [isVisible, setIsVisible] = useState(false);
   const ticking = useRef(false);
 
+  // Define sections with their icons and labels
+  const sections = [
+    { id: 'home', label: 'Home', icon: Home },
+    { id: 'hero', label: 'Hero', icon: Sparkles },
+    { id: 'stats', label: 'Stats', icon: BarChart3 },
+    { id: 'video', label: 'Video', icon: Film },
+    { id: 'cybermall', label: 'Cybermall', icon: ShoppingBag },
+    { id: 'brands', label: 'Brands', icon: Tags },
+    { id: 'gallery', label: 'Gallery', icon: Image },
+    { id: 'founder', label: 'Founder', icon: User },
+    { id: 'process', label: 'Process', icon: Settings },
+    { id: 'cta', label: 'CTA', icon: Rocket },
+    { id: 'footer', label: 'Footer', icon: FileText },
+  ];
+
   useEffect(() => {
-    const updateProgress = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0);
-      setIsVisible(scrollTop > 100);
+    const updateSection = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      
+      // Find which section is currently in view
+      let currentSection = 'Home';
+      
+      // Get all section elements with their IDs
+      for (const section of sections) {
+        const element = document.getElementById(section.id);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          // Check if section is in viewport
+          if (rect.top <= windowHeight * 0.5 && rect.bottom >= 0) {
+            currentSection = section.label;
+            break;
+          }
+        }
+      }
+      
+      setActiveSection(currentSection);
+      setIsVisible(scrollY > 100);
       ticking.current = false;
     };
 
     const onScroll = () => {
       if (!ticking.current) {
         ticking.current = true;
-        requestAnimationFrame(updateProgress);
+        requestAnimationFrame(updateSection);
       }
     };
 
+    // Initial check
+    setTimeout(updateSection, 100);
+    
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('resize', updateSection, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', updateSection);
+    };
   }, []);
+
+  // Find current section data
+  const currentSectionData = sections.find(s => s.label === activeSection);
+  const CurrentIcon = currentSectionData?.icon || Home;
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
+      initial={{ opacity: 0, x: -20 }}
       animate={{
         opacity: isVisible ? 1 : 0,
-        x: isVisible ? 0 : 20,
+        x: isVisible ? 0 : -20,
         pointerEvents: isVisible ? 'auto' : 'none',
       }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed left-2 sm:left-3 md:left-4 top-1/2 -translate-y-1/2 z-50 hidden md:block"
+      className="fixed left-2 sm:left-3 md:left-4 top-1/2 -translate-y-1/2 z-50"
     >
-      <div className="relative h-[150px] sm:h-[180px] md:h-[200px] w-[2px] sm:w-[3px] bg-white/10 rounded-full overflow-hidden">
-        <div
-          className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gold-bright via-gold to-gold-deep"
-          style={{ height: `${progress}%` }}
-        />
-        <div className="absolute inset-0 flex flex-col justify-between items-center py-1 sm:py-2">
-          {[0, 25, 50, 75, 100].map((value) => (
-            <div
-              key={value}
-              className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300
-                ${progress >= value ? 'bg-gold shadow-gold' : 'bg-white/20'}`}
-              style={{
-                transform: 'translateX(-1px)',
-                boxShadow: progress >= value ? '0 0 8px rgba(201,162,39,0.5)' : 'none',
-              }}
-            />
-          ))}
+      <div className="relative flex flex-col items-center">
+        {/* Vertical line */}
+        <div className="relative h-[150px] sm:h-[180px] md:h-[200px] w-[2px] sm:w-[3px] bg-white/10 rounded-full overflow-hidden">
+          <div
+            className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gold-bright via-gold to-gold-deep"
+            style={{ height: '100%' }}
+          />
         </div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-gold/20 blur-xl rounded-full pointer-events-none" />
-      </div>
-      <div className="mt-1 sm:mt-2 text-center">
-        <span className="text-[10px] sm:text-xs font-mono text-gold/60">{Math.round(progress)}%</span>
+
+        {/* Section icon display */}
+        <motion.div
+          key={activeSection}
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="mt-2 sm:mt-3 text-center flex flex-col items-center"
+        >
+          <div className="text-gold">
+            <CurrentIcon 
+              size={24} 
+              className="sm:w-7 sm:h-7 md:w-8 md:h-8"
+              strokeWidth={1.5}
+            />
+          </div>
+          <div className="mt-1 sm:mt-1.5">
+            <span className="text-[8px] sm:text-[10px] md:text-xs font-mono text-gold/80 tracking-wider whitespace-nowrap">
+              {activeSection}
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Decorative glow */}
+        <div className="absolute -inset-4 bg-gold/5 blur-2xl rounded-full pointer-events-none" />
       </div>
     </motion.div>
   );
@@ -362,9 +419,6 @@ const ScrollProgressIndicator = () => {
 // Main App Component
 const App = () => {
   const [showOnboarding, setShowOnboarding] = useState(true);
-  // Content only mounts once the splash has actually finished — nothing below
-  // the splash does any work (animations, IO observers, image decode) until
-  // the browser has spare main-thread time to give it.
   const [contentMounted, setContentMounted] = useState(false);
 
   const handleOnboardingComplete = useCallback(() => {
@@ -374,8 +428,6 @@ const App = () => {
 
   return (
     <>
-      {/* Mouse follower is safe to mount immediately - it no-ops on touch devices
-          and does nothing until the pointer actually moves */}
       <MouseFollower />
 
       <AnimatePresence>
@@ -392,16 +444,18 @@ const App = () => {
           <ScrollProgressIndicator />
           <NavBar />
 
-          <HeroSection />
-          <StatsSection />
-          <VideoSection />
-          <CybermallSection />
-          <BrandsSection />
-          <GallerySection />
-          <FounderSection />
-          <ProcessSection />
-          <CTABanner />
-          <Footer />
+          {/* Add IDs to sections for scroll tracking */}
+          <div id="home"><HeroSection /></div>
+          <div id="stats"><StatsSection /></div>
+          <div id="video"><VideoSection /></div>
+          <div id="cybermall"><CybermallSection /></div>
+          <div id="brands"><BrandsSection /></div>
+          <div id="gallery"><GallerySection /></div>
+          <div id="founder"><FounderSection /></div>
+          <div id="process"><ProcessSection /></div>
+          <div id="cta"><CTABanner /></div>
+          <div id="footer"><Footer /></div>
+          
           <BackToTopButton />
         </motion.div>
       )}
