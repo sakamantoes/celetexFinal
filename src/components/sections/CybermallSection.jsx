@@ -221,13 +221,8 @@ export function CybermallSection() {
       {/* ══════════════════════════════════════════════════════════════════════
           ESTATE LAUNCH ANNOUNCEMENT FLYER
           ─────────────────────────────────────────────────────────────────────
-          Drop your launch flyer image into images.estateLaunchFlyer.
-          The section works in three modes:
-            1. Real flyer image  → renders it full-width inside a gold frame
-            2. No image / error  → renders a designed placeholder that still
-                                   looks intentional and on-brand
-          To use: add   estateLaunchFlyer: require('./estate-flyer.jpg')
-          (or similar) to your assets/image.js exports.
+          The flyer image now displays FULL WIDTH inside the gold frame.
+          The image will scale to fit the container while maintaining aspect ratio.
       ════════════════════════════════════════════════════════════════════════ */}
       <motion.div
         className="mt-16 md:mt-24"
@@ -265,25 +260,26 @@ export function CybermallSection() {
 
         {/* ── Flyer frame ─────────────────────────────────────────────────── */}
         <motion.div
-          className="relative rounded-2xl overflow-hidden"
+          className="relative rounded-2xl overflow-hidden w-full"
           style={{
             background: 'linear-gradient(135deg, #C9A227 0%, #8B6914 40%, #C9A227 70%, #F3D27A 100%)',
             padding: '3px',
           }}
           whileHover={{ boxShadow: '0 0 60px rgba(201,162,39,0.35)', transition: { duration: 0.3 } }}
         >
-          {/* Inner container */}
-          <div className="relative rounded-[14px] overflow-hidden bg-[#0a0a0a]">
+          {/* Inner container - now full width with no max-height constraint */}
+          <div className="relative rounded-[14px] overflow-hidden bg-[#0a0a0a] w-full">
 
-            {/* ── REAL FLYER IMAGE (swap in when you have it) ── */}
+            {/* ── REAL FLYER IMAGE - FULL WIDTH DISPLAY ── */}
             {images.estateLaunchFlyer && !flyerError ? (
-              <img
-                src={images.estateLaunchFlyer}
-                alt="Celtex Grandville Estate — Official Launch Announcement"
-                className="w-full h-auto object-cover block"
-                style={{ maxHeight: '80vh', objectPosition: 'center top' }}
-                onError={() => setFlyerError(true)}
-              />
+              <div className="w-full flex justify-center items-center">
+                <img
+                  src={images.estateLaunchFlyer}
+                  alt="Celtex Grandville Estate — Official Launch Announcement"
+                  className="w-full h-auto object-contain block"
+                  onError={() => setFlyerError(true)}
+                />
+              </div>
             ) : (
               /* ── PLACEHOLDER — remove once you add the real flyer ── */
               <div
