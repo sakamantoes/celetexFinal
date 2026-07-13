@@ -47,8 +47,8 @@ const estateImages = [
   images.estate4 || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJMw4BI-3iFmnkS3ceFYUc-9oGeTGjRG4j7sfFwikV_ATp3qj6raeH_Sc&s=10',
   images.estate5 || 'https://naijalandlord.com/wp-content/uploads/2023/10/IMG-20231001-WA0069.jpg',
   images.estate6 || 'https://landproperty.ng/wp-content/uploads/2025/07/new.jpeg',
-  images.estate7 || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
-  images.estate8 || 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
+  images.estate7 || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj1H4DDq5yeu3pAKQerqCeRYO6qtjZTF7su8t9DU0q364VAuuKsSSz0Xw&s=10',
+  images.estate8 || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8VmogifVB-BIuVTZhxW29qtjmf-RHwU1FWBvR-pIXEr_6_MtN5qW2Qa6O&s=10',
 ];
 
 export function CybermallSection() {
