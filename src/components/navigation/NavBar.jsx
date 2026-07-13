@@ -119,7 +119,7 @@ export function NavBar({ scrolled }) {
               whileHover={{ scale: 1.05, rotate: -3 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
-              <img src={images.main1} alt="Celetex Group Logo" className="w-full h-full object-contain" />
+              <img src={images.omoh} alt="Celetex Group Logo" className="w-full h-full object-contain" />
             </motion.span>
           </motion.div>
 
