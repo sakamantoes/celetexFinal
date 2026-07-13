@@ -166,14 +166,14 @@ export function CybermallSection() {
           className="font-display text-2xl md:text-3xl font-bold text-white mb-3"
           variants={fadeUp} custom={0} initial="hidden" whileInView="visible" viewport={viewport}
         >
-          Celtex Grandville Estate
+          celetex Grandville Estate
         </motion.h3>
 
         <motion.p
           className="text-[15px] leading-relaxed text-white/55 mb-8 max-w-2xl"
           variants={fadeUp} custom={0.1} initial="hidden" whileInView="visible" viewport={viewport}
         >
-          Experience luxury living at Celtex Grandville Estate — a premier residential
+          Experience luxury living at celetex Grandville Estate — a premier residential
           community designed for modern comfort and elegance. Coming soon.
         </motion.p>
 
@@ -191,7 +191,7 @@ export function CybermallSection() {
             >
               <img
                 src={img}
-                alt={`Celtex Grandville Estate ${index + 1}`}
+                alt={`celetex Grandville Estate ${index + 1}`}
                 loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
@@ -254,7 +254,7 @@ export function CybermallSection() {
           className="text-white/50 text-sm mb-8 max-w-xl"
           variants={fadeUp} custom={0.12} initial="hidden" whileInView="visible" viewport={viewport}
         >
-          The official launch of Celtex Grandville Estate is coming. Mark your calendar
+          The official launch of celetex Grandville Estate is coming. Mark your calendar
           and be the first to secure your future home.
         </motion.p>
 
@@ -275,7 +275,7 @@ export function CybermallSection() {
               <div className="w-full flex justify-center items-center">
                 <img
                   src={images.estateLaunchFlyer}
-                  alt="Celtex Grandville Estate — Official Launch Announcement"
+                  alt="celetex Grandville Estate — Official Launch Announcement"
                   className="w-full h-auto object-contain block"
                   onError={() => setFlyerError(true)}
                 />
@@ -317,7 +317,7 @@ export function CybermallSection() {
                   </p>
 
                   <h4 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-3">
-                    Celtex Grandville
+                    celetex Grandville
                     <br />
                     <span className="bg-gradient-to-r from-[#C9A227] via-[#F3D27A] to-[#C9A227] bg-clip-text text-transparent">
                       Estate
@@ -426,7 +426,7 @@ export function CybermallSection() {
               className="font-display text-xl md:text-2xl font-bold text-white mb-3"
               variants={fadeUp} custom={0.1} initial="hidden" whileInView="visible" viewport={viewport}
             >
-              Secure Your Spot at Celtex Grandville Estate
+              Secure Your Spot at celetex Grandville Estate
             </motion.h4>
 
             <motion.p
