@@ -116,7 +116,7 @@ export function VideoSection() {
             >
               <div className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-xl bg-gradient-gold flex items-center justify-center 
                 shadow-gold/30 overflow-hidden mx-auto">
-                <img src={images.Logo1} alt="Celetex Group" className="w-full h-full object-cover" />
+                <img src={images.omoh} alt="Celetex Group" className="w-full h-full object-cover" />
               </div>
             </motion.div>
           </motion.div>
