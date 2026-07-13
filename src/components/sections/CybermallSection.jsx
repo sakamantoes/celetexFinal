@@ -41,12 +41,12 @@ const features = [
 ];
 
 const estateImages = [
-  images.estate1 || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
-  images.estate2 || 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
-  images.estate3 || 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800',
-  images.estate4 || 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
-  images.estate5 || 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800',
-  images.estate6 || 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
+  images.estate1 || 'https://images.pexels.com/photos/38303664/pexels-photo-38303664.jpeg',
+  images.estate2 || 'https://images.pexels.com/photos/36622005/pexels-photo-36622005.jpeg',
+  images.estate3 || 'https://images.pexels.com/photos/34432716/pexels-photo-34432716.jpeg',
+  images.estate4 || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJMw4BI-3iFmnkS3ceFYUc-9oGeTGjRG4j7sfFwikV_ATp3qj6raeH_Sc&s=10',
+  images.estate5 || 'https://naijalandlord.com/wp-content/uploads/2023/10/IMG-20231001-WA0069.jpg',
+  images.estate6 || 'https://landproperty.ng/wp-content/uploads/2025/07/new.jpeg',
   images.estate7 || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
   images.estate8 || 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
 ];
