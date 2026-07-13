@@ -12,6 +12,7 @@ import newLog from '../assets/newLog.jpg'
 import main from '../assets/main.jpg'
 import main1 from '../assets/main1.png'
 import ceo from '../assets/ceo.jpg'
+import estateLaunchFlyer from '../assets/estateLaunchFlyer.jpg'
 
 const images = {
    Logo: logo,
@@ -27,7 +28,8 @@ const images = {
    newLog,
    main,
    main1,
-   ceo
+   ceo,
+   estateLaunchFlyer
 }
 
 export default images
