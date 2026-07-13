@@ -11,6 +11,7 @@ import mockup from '../assets/mockup.jpg'
 import newLog from '../assets/newLog.jpg'
 import main from '../assets/main.jpg'
 import main1 from '../assets/main1.png'
+import ceo from '../assets/ceo.jpg'
 
 const images = {
    Logo: logo,
@@ -25,7 +26,8 @@ const images = {
    logo01Png: logo01,
    newLog,
    main,
-   main1
+   main1,
+   ceo
 }
 
 export default images

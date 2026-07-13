@@ -114,7 +114,7 @@ export function FounderSection() {
             >
               <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#2a2a2a]">
                 <motion.img
-                  src={images.Agu}
+                  src={images.ceo}
                   alt="Onyekachi Celestine - Founder of Celetex Group"
                   className="w-full h-full object-cover object-center"
                   loading="lazy"
