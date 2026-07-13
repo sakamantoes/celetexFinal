@@ -166,7 +166,7 @@ export function CybermallSection() {
           className="font-display text-2xl md:text-3xl font-bold text-white mb-3"
           variants={fadeUp} custom={0} initial="hidden" whileInView="visible" viewport={viewport}
         >
-          celetex Grandville Estate
+          Celetex Grandville Estate
         </motion.h3>
 
         <motion.p
